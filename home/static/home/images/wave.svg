@@ -1,0 +1,36 @@
+<svg
+      viewBox="0 0 1536 700"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      transform="translate(0 100)
+                scale(1 1.1)"
+    >
+      <path
+        fill="rgba(120, 57, 249, 1)"
+        d="M 0 201 C 0.5 201 -1.5 144 -1 144 L -1 144 L -1 0 L 0 0 Z"
+        stroke-width="0"
+      ></path>
+      <path
+        fill="rgba(120, 57, 249, 1)"
+        d="M -2 144 C 231.5 144 231.5 81 465 81 L 465 81 L 465 0 L -2 0 Z"
+        stroke-width="0"
+      ></path>
+      <path
+        fill="rgba(120, 57, 249, 1)"
+        d="M 464 81 C 672 81 672 316 880 316 L 880 316 L 880 0 L 464 0 Z"
+        stroke-width="0"
+      ></path>
+      <path
+        fill="rgba(120, 57, 249, 1)"
+        d="M 879 316 C 1207.5 316 1207.5 609 1536 609 L 1536 609 L 1536 0 L 879 0 Z"
+        stroke-width="0"
+      ></path>
+      <path
+        fill="rgba(120, 57, 249, 1)"
+        d="M 1535 609 C 1535.5 609 1535.5 201 1536 201 L 1536 201 L 1536 0 L 1535 0 Z"
+        stroke-width="0"
+      ></path>
+    </svg>
+
+    <!-- ALt path -->
+    <!-- <path fill="rgba(120, 57, 249, 1)" d="M 0 92 C 5.5 92 -16.5 172 -11 172 L -11 172 L -11 0 L 0 0 Z" stroke-width="0"></path> <path fill="rgba(120, 57, 249, 1)" d="M -12 172 C 301 172 301 92 614 92 L 614 92 L 614 0 L -12 0 Z" stroke-width="0"></path> <path fill="rgba(120, 57, 249, 1)" d="M 613 92 C 624 92 624 92 635 92 L 635 92 L 635 0 L 613 0 Z" stroke-width="0"></path><path fill="rgba(120, 57, 249, 1)" d="M 634 92 C 819.5 92 819.5 307 1005 307 L 1005 307 L 1005 0 L 634 0 Z" stroke-width="0"></path><path fill="rgba(120, 57, 249, 1)" d="M 1004 307 C 1269.5 307 1269.5 597 1535 597 L 1535 597 L 1535 0 L 1004 0 Z" stroke-width="0"></path><path fill="rgba(47, 73, 94, 1)" d="M 1534 597 C 1535 597 1535 89 1536 89 L 1536 89 L 1536 0 L 1534 0 Z" stroke-width="0"></path></svg> -->

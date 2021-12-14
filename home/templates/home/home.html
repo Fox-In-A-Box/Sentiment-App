@@ -1,0 +1,109 @@
+{% extends "home/base.html" %} {% block content %}
+
+<!-- Section 1 : Header Banner -->
+<!-- <div class="header-colour"></div> -->
+<section class="main-banner">
+  <svg
+    viewBox="0 0 1536 600"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    transform="translate(180 100)
+                scale(1.6 1.1)"
+  >
+    <path
+      fill="rgba(120, 57, 249, 1)"
+      d="M 0 201 C 0.5 201 -1.5 144 -1 144 L -1 144 L -1 0 L 0 0 Z"
+      stroke-width="0"
+    ></path>
+    <path
+      fill="rgba(120, 57, 249, 1)"
+      d="M -2 144 C 231.5 144 231.5 81 465 81 L 465 81 L 465 0 L -2 0 Z"
+      stroke-width="0"
+    ></path>
+    <path
+      fill="rgba(120, 57, 249, 1)"
+      d="M 464 81 C 672 81 672 316 880 316 L 880 316 L 880 0 L 464 0 Z"
+      stroke-width="0"
+    ></path>
+    <path
+      fill="rgba(120, 57, 249, 1)"
+      d="M 879 316 C 1207.5 316 1207.5 609 1536 609 L 1536 609 L 1536 0 L 879 0 Z"
+      stroke-width="0"
+    ></path>
+    <path
+      fill="rgba(120, 57, 249, 1)"
+      d="M 1535 609 C 1535.5 609 1535.5 201 1536 201 L 1536 201 L 1536 0 L 1535 0 Z"
+      stroke-width="0"
+    ></path>
+  </svg>
+</section>
+<div class="header-container">
+  <section id="header-text">
+    <h1>
+      Explore the<br />
+      Twitter Sentiment Analyser.
+    </h1>
+    <br />
+    <p class="header-p">
+      Search for any hashtag, query or @user tag to<br />
+      analyse the <span class="highlight-purple">Sentiment </span> or
+      <span class="highlight-red">Emotion</span>
+      of related tweets
+    </p>
+    <a class="common-btn" href="{% url 'sentiment-about' %}">Read More</a>
+  </section>
+  <div id="header-img">
+    <img src="../../static/home/images/social-media-phone.png" alt="" />
+  </div>
+</div>
+
+<!-- Section 2 : Cards -->
+
+<section id="front-page-items">
+  <h1>How would you like to analyse your tweet?</h1>
+  <div class="card-container">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-front">
+          <div class="flip-icons">
+            <i class="far fa-thumbs-up fa-2x"></i>
+            <i class="far fa-thumbs-down fa-2x"></i>
+          </div>
+
+          <h3 class="card-title">Sentiment</h3>
+          <p class="card-subtitle">Analyse Sentiment Here</p>
+        </div>
+        <div class="card-back">
+          <p class="card-body">
+            This will tell you if the overall sentiment of your search query is
+            positive, negative or neutral.
+          </p>
+
+          <a class="card-btn" href="{% url 'sentiment-all' %}">Start</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-front">
+          <div class="flip-icons">
+            <i class="far fa-laugh-beam fa-2x"></i>
+            <i class="far fa-sad-tear fa-2x"></i>
+            <i class="far fa-angry fa-2x"></i>
+          </div>
+
+          <h3 class="card-title">Emotion</h3>
+          <p class="card-subtitle">Analyse Emotion<br />Here</p>
+        </div>
+        <div class="card-back">
+          <p class="card-body">
+            This will tell you if the overall emotion of your search query is
+            worried, sad, happy, or angry.
+          </p>
+          <button class="card-btn">Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
