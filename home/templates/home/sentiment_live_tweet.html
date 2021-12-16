@@ -15,7 +15,7 @@
     </button>
   </form>
 
-  <form class="search-form" id="live-form" method="post">
+  <form class="search-form" id="live-form" method="post" >
     {% csrf_token %}
 
       {{ liveForm }}
@@ -24,7 +24,8 @@
       Submit
     </button>
   </form>
-  <form class="search-form" id="upload-form" method="post">
+  
+  <form class="search-form" action="" id="upload-form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
       {{ uploadForm }}
@@ -32,6 +33,7 @@
     <!-- <input type="hidden" name="form_type" value="text"> -->
     <button name="upload-form" class="common-btn search-button" id="upload-submit-btn" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>
   </form>
+  <!-- <iframe name="hidden-iframe" style="display: none;"></iframe> -->
   <div id="alert-box"></div>
   <div id="progress-bar"></div>
   <div id="render-container">

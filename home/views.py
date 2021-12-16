@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, View, TemplateView
-from .models import Text
+from .models import Csv, CsvTweets
 from .analyse_text import AnalysisText
+from .analyse_csv import AnalysisCsv
 from .analyse_live_tweet import AnalysisLiveTweet
-from .forms import liveTweetForm, uploadFileForm, TextForm
+from .forms import liveTweetForm, CsvModelForm, TextForm
 from django.http import JsonResponse
+import csv, pandas as pd
 
 
 def home(request):
@@ -59,6 +61,22 @@ def liveTweetTest(request):
     }
     return render(request, 'home/sentiment_type.html', context)
 
+def uploadTest(request):
+    form = CsvModelForm(request.POST or None, request.FILES or None)
+    if request.is_ajax():
+        print('started')
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'hell yeah'}, status=200)
+        else:
+            print('form not valid')
+    else:
+        print('nothing happened')        
+    context = {
+        'form':form,
+        'title':'Sentiment'
+    }
+    return render(request, 'home/sentiment_type.html', context)
 
 class SentimentAnalysisPage(TemplateView):
     template_name = 'home/sentiment_live_tweet.html'
@@ -66,7 +84,7 @@ class SentimentAnalysisPage(TemplateView):
     def get(self, request, *args, **kwargs):
         typeForm = TextForm()
         liveForm = liveTweetForm()
-        uploadForm = uploadFileForm()
+        uploadForm = CsvModelForm()
 
         return self.render_to_response({'typeForm':typeForm, 'liveForm': liveForm, 'uploadForm': uploadForm})
         
@@ -88,10 +106,8 @@ class SentimentAnalysisPage(TemplateView):
                 # data['type']="live_tweet" 
                 return JsonResponse(data, status=200)
         elif "text" in request.POST:
-            print('text')
             form = TextForm(request.POST)   
             if request.is_ajax():
-                print('text2')
                 # form = TextForm(request.POST)
                 if form.is_valid():
                     input = form.cleaned_data['text']
@@ -111,12 +127,42 @@ class SentimentAnalysisPage(TemplateView):
                     data = AnalysisText.analyse(input)
                     # data['type']="text"
                     return JsonResponse(data, status=200)
-        elif 'uploaded-form' in request.POST:
-            form = uploadFileForm(request.POST or None, request.FILES or None)
-            if form.is_valid():
-            #    insert process here
-                return
-        print('nothing happened')        
+        elif 'file_name' in request.POST:
+            form = CsvModelForm(request.POST, request.FILES)
+            if request.is_ajax():
+                print('started')
+                if form.is_valid():
+                    form.save()
+                    # form = CsvModelForm()
+                    # obj = Csv.objects.get(activated=False)
+                    # with open(obj.file_name.path, 'r') as f:
+                    #     reader = csv.reader(f)
+
+                    #     for i, row in enumerate(reader):
+                    #         if i != 0:
+                    #             print(row)
+                    #             print(type(row))
+                    #             CsvTweets.objects.create(
+                    #                 tweets="".join(row)
+                    #             )
+                    #     tweetObjs = CsvTweets.objects.filter(processed=False).values("tweets")
+                    #     dataframe = pd.DataFrame(tweetObjs)
+                    #     print(dataframe)
+
+                    #     CsvTweets.objects.filter(processed=False).update(processed=True)
+                    #     obj.activated = True
+                    #     obj.save()
+                        
+                    #     data = AnalysisCsv.analyse(AnalysisCsv, dataframe)
+                    #     print(AnalysisCsv.analyse(AnalysisCsv, dataframe)['sentiment'])
+                    #     print(AnalysisCsv.analyse(AnalysisCsv, dataframe)['polarity'])
+                    #     # data['type']="text"
+                    #     return JsonResponse(data, status=200)
+                    return JsonResponse({'message': 'hell yeah'}, status=200)
+                else:
+                    print('form not valid')
+        else:
+            print('nothing happened')        
         context = {
             'form':form,
             'title':'Sentiment'

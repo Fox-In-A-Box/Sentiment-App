@@ -1,15 +1,17 @@
 window.onload = function () {
   const renderContainer = document.getElementById("render-container");
-  // const form = document.getElementById("search-form");
+  const form = document.getElementById("search-form");
 
   const csrf = document.getElementsByName("csrfmiddlewaretoken");
+  const progressBar = document.getElementsByClassName("progress-bar");
   const textForm = document.getElementById("text-form");
   const liveForm = document.getElementById("live-form");
   const uploadedForm = document.getElementById("upload-form");
 
   const text = document.getElementById("id_text");
   const liveTweet = document.getElementById("id_live_tweet");
-  const uploaded_file = document.getElementById("id_uploaded_file");
+  const input = document.getElementById("id_file_name");
+  console.log(input);
 
   const alertBox = document.getElementById("alert-box");
   const progressBar = document.getElementById("progress-bar");
@@ -237,75 +239,15 @@ window.onload = function () {
   //   });
   // });
 
-  textForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const formdata = new FormData();
-    formdata.append("csrfmiddlewaretoken", csrf[0].value);
-
-    console.log(text);
-    console.log(text.value);
-    formdata.append("text", text.value);
-
-    // For Form
-    $.ajax({
-      type: "POST",
-      url: "",
-      data: formdata,
-      success: function (response) {
-        console.log(response);
-        resultHandler(response.sentiment);
-        chartHandler(response.dataArray);
-        pointer(response.polarity);
-      },
-      error: function () {
-        console.log(error);
-      },
-      cache: false,
-      contentType: false,
-      processData: false,
-    });
-  });
-
-  liveForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const formdata = new FormData();
-    formdata.append("csrfmiddlewaretoken", csrf[0].value);
-
-    console.log(liveTweet);
-    console.log(liveTweet.value);
-    formdata.append("live_tweet", liveTweet.value);
-
-    // For Form
-    $.ajax({
-      type: "POST",
-      url: "",
-      data: formdata,
-      success: function (response) {
-        console.log(response);
-        resultHandler(response.sentiment);
-        chartHandler(response.dataArray);
-        pointer(response.polarity);
-      },
-      error: function () {
-        console.log(error);
-      },
-      cache: false,
-      contentType: false,
-      processData: false,
-    });
-  });
-
-  // $("#upload-submit-button").click(function (e) {
+  // textForm.addEventListener("submit", (e) => {
   //   e.preventDefault();
 
   //   const formdata = new FormData();
   //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
 
-  //   console.log(uploaded_file);
-  //   console.log(uploaded_file.value);
-  //   formdata.append("uploaded_file", uploaded_file.value);
+  //   console.log(text);
+  //   console.log(text.value);
+  //   formdata.append("text", text.value);
 
   //   // For Form
   //   $.ajax({
@@ -325,6 +267,88 @@ window.onload = function () {
   //     contentType: false,
   //     processData: false,
   //   });
+  // });
+
+  // liveForm.addEventListener("submit", (e) => {
+  //   e.preventDefault();
+
+  //   const formdata = new FormData();
+  //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
+
+  //   console.log(liveTweet);
+  //   console.log(liveTweet.value);
+  //   formdata.append("live_tweet", liveTweet.value);
+
+  //   // For Form
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "",
+  //     data: formdata,
+  //     success: function (response) {
+  //       console.log(response);
+  //       resultHandler(response.sentiment);
+  //       chartHandler(response.dataArray);
+  //       pointer(response.polarity);
+  //     },
+  //     error: function () {
+  //       console.log(error);
+  //     },
+  //     cache: false,
+  //     contentType: false,
+  //     processData: false,
+  //   });
+  // });
+
+  input.addEventListener("change", function (e) {
+    e.preventDefault();
+
+    const file_data = input.files[0];
+    console.log(file_data);
+
+    const formdata = new FormData();
+    formdata.append("csrfmiddlewaretoken", csrf[0].value);
+    formdata.append("file_name", input.files[0]);
+
+    $.ajax({
+      type: "POST",
+      url: form.action,
+      enctype: "multipart/formdata",
+      data: formdata,
+      beforeSend: function () {},
+      xhr: function () {
+        const xhr = new window.XMLHttpRequest();
+        xhr.upload.addEventListener("progress", (e) => {
+          if (e.lengthComputable) {
+            const loadpercent = (e.loaded / e.total) * 100;
+            console.log(loadpercent);
+          }
+        });
+        return xhr;
+      },
+      success: function (response) {
+        console.log(response);
+        // resultHandler(response.sentiment);
+        // chartHandler(response.dataArray);
+        // pointer(response.polarity);
+      },
+      error: function () {
+        console.log(error);
+      },
+      cache: false,
+      contentType: false,
+      processData: false,
+    });
+  });
+  //   fetch("")
+  //     .then(function (response) {
+  //       return response.json();
+  //     })
+  //     .then(function (response) {
+  //       console.log(response);
+  //       resultHandler(response.sentiment);
+  //       chartHandler(response.dataArray);
+  //       pointer(response.polarity);
+  //     });
   // });
 
   // console.log(form);

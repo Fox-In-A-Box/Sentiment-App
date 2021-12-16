@@ -4,7 +4,7 @@
   <div class="search-background"></div>
   <h1>Type Your Tweet</h1>
   <!-- <div class="form-container"> -->
-  <form id="search-form" method="post">
+  <form id="search-form" action="" method="post">
     {% csrf_token %}
     <!-- <input
       type="text"
@@ -16,6 +16,7 @@
       Submit
     </button>
   </form>
+  <div class="progress-bar"></div>
   <div id="render-container">
     <!-- result items go here -->
   </div>
