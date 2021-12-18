@@ -3,15 +3,15 @@ window.onload = function () {
   const form = document.getElementById("search-form");
 
   const csrf = document.getElementsByName("csrfmiddlewaretoken");
-  const progressBar = document.getElementsByClassName("progress-bar");
+  // const progressBar = document.getElementsByClassName("progress-bar");
   const textForm = document.getElementById("text-form");
   const liveForm = document.getElementById("live-form");
   const uploadedForm = document.getElementById("upload-form");
 
   const text = document.getElementById("id_text");
   const liveTweet = document.getElementById("id_live_tweet");
-  const input = document.getElementById("id_file_name");
-  console.log(input);
+  const fileInput = document.getElementById("id_file_name");
+  console.log(fileInput);
 
   const alertBox = document.getElementById("alert-box");
   const progressBar = document.getElementById("progress-bar");
@@ -158,160 +158,105 @@ window.onload = function () {
       }
     );
   };
-  //   const loadElement = function () {
-  //     if (!$("#circle1").hasClass("load")) {
-  //       $("#circle1").addClass("load");
-  //     }
-  //     if (!$("#circle2").hasClass("load")) {
-  //       $("#circle2").addClass("load");
-  //     }
-  //     if (!$("#circle3").hasClass("load")) {
-  //       $("#circle3").addClass("load");
-  //     }
-  //   };
 
-  // Pie CHart
-  //   const chart = (dataArray) => {
-  //     const ctx = document.getElementById("pie-chart");
-  //     const myChart = new Chart(ctx, {
-  //       type: "bar",
-  //       data: {
-  //         labels: ["Positive", "Neutral", "Negative"],
-  //         datasets: [
-  //           {
-  //             label: "Sentiment of Tweet Entered",
-  //             data: dataArray,
-  //             backgroundColor: ["#b3e59f", "#ffe07d", "#da387d"], //green #b3e59f, yellow #ffe07d, red #da387d
-  //             hoverOffset: 4,
-  //             normalized: true,
-  //           },
-  //         ],
-  //       },
-  //       options: {
-  //         scales: {
-  //           y: {
-  //             beginAtZero: true,
-  //           },
-  //         },
-  //         // plugins: {
-  //         //   deferred: {
-  //         //     xOffset: "50%", // defer until 150px of the canvas width are inside the viewport
-  //         //     yOffset: "50%", // defer until 50% of the canvas height are inside the viewport
-  //         //     delay: 4000, // delay of 500 ms after the canvas is considered inside the viewport
-  //         //   },
-  //         // },
-  //       },
-  //     });
-  //   };
-  // AJAX
-  // form.addEventListener("submit", (e) => {
-  //   e.preventDefault();
+  function spinnerToggle() {
+    if ($("#spinner-box").css("opacity") == 0) {
+      $("#spinner-box").css({
+        height: "fit-content",
+        opacity: "1",
+        transition: "2s",
+      });
+      $("#spinner-box").html(
+        `<img src="../../static/home/images/Dual Ring-1s-50px.svg" alt="">`
+      );
+    } else {
+      $("#spinner-box").css({
+        height: "0rem",
+        opacity: "0",
+        transition: "0~s",
+      });
+      $("#spinner-box").html(``);
+    }
+  }
 
-  //   const formdata = new FormData();
-  //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
-  //   if (text) {
-  //     console.log(text);
-  //     console.log(text.value);
-  //     formdata.append("text", text.value);
-  //   } else if (liveTweet) {
-  //     console.log(liveTweet);
-  //     console.log(liveTweet.value);
-  //     formdata.append("liveTweet", liveTweet.value);
-  //   }
-
-  //   // For Form
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "",
-  //     data: formdata,
-  //     success: function (response) {
-  //       console.log(response);
-  //       resultHandler(response.sentiment);
-  //       chartHandler(response.dataArray);
-  //       pointer(response.polarity);
-  //     },
-  //     error: function () {
-  //       console.log(error);
-  //     },
-  //     cache: false,
-  //     contentType: false,
-  //     processData: false,
-  //   });
-  // });
-
-  // textForm.addEventListener("submit", (e) => {
-  //   e.preventDefault();
-
-  //   const formdata = new FormData();
-  //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
-
-  //   console.log(text);
-  //   console.log(text.value);
-  //   formdata.append("text", text.value);
-
-  //   // For Form
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "",
-  //     data: formdata,
-  //     success: function (response) {
-  //       console.log(response);
-  //       resultHandler(response.sentiment);
-  //       chartHandler(response.dataArray);
-  //       pointer(response.polarity);
-  //     },
-  //     error: function () {
-  //       console.log(error);
-  //     },
-  //     cache: false,
-  //     contentType: false,
-  //     processData: false,
-  //   });
-  // });
-
-  // liveForm.addEventListener("submit", (e) => {
-  //   e.preventDefault();
-
-  //   const formdata = new FormData();
-  //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
-
-  //   console.log(liveTweet);
-  //   console.log(liveTweet.value);
-  //   formdata.append("live_tweet", liveTweet.value);
-
-  //   // For Form
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "",
-  //     data: formdata,
-  //     success: function (response) {
-  //       console.log(response);
-  //       resultHandler(response.sentiment);
-  //       chartHandler(response.dataArray);
-  //       pointer(response.polarity);
-  //     },
-  //     error: function () {
-  //       console.log(error);
-  //     },
-  //     cache: false,
-  //     contentType: false,
-  //     processData: false,
-  //   });
-  // });
-
-  input.addEventListener("change", function (e) {
+  textForm.addEventListener("submit", (e) => {
+    spinnerToggle();
     e.preventDefault();
 
-    const file_data = input.files[0];
+    const formdata = new FormData();
+    formdata.append("csrfmiddlewaretoken", csrf[0].value);
+
+    console.log(text);
+    console.log(text.value);
+    formdata.append("text", text.value);
+
+    // For Form
+    $.ajax({
+      type: "POST",
+      url: "",
+      data: formdata,
+      success: function (response) {
+        console.log(response);
+        spinnerToggle();
+        resultHandler(response.sentiment);
+        chartHandler(response.dataArray);
+        pointer(response.polarity);
+      },
+      error: function () {
+        console.log(error);
+      },
+      cache: false,
+      contentType: false,
+      processData: false,
+    });
+  });
+
+  liveForm.addEventListener("submit", (e) => {
+    spinnerToggle();
+    e.preventDefault();
+
+    const formdata = new FormData();
+    formdata.append("csrfmiddlewaretoken", csrf[0].value);
+
+    console.log(liveTweet);
+    console.log(liveTweet.value);
+    formdata.append("live_tweet", liveTweet.value);
+
+    // For Form
+    $.ajax({
+      type: "POST",
+      url: "",
+      data: formdata,
+      success: function (response) {
+        console.log(response);
+        spinnerToggle();
+        resultHandler(response.sentiment);
+        chartHandler(response.dataArray);
+        pointer(response.polarity);
+      },
+      error: function () {
+        console.log(error);
+      },
+      cache: false,
+      contentType: false,
+      processData: false,
+    });
+  });
+
+  uploadedForm.addEventListener("submit", function (e) {
+    spinnerToggle();
+    e.preventDefault();
+
+    const file_data = fileInput.files[0];
     console.log(file_data);
 
     const formdata = new FormData();
     formdata.append("csrfmiddlewaretoken", csrf[0].value);
-    formdata.append("file_name", input.files[0]);
+    formdata.append("file_name", fileInput.files[0]);
 
     $.ajax({
       type: "POST",
-      url: form.action,
+      url: uploadedForm.action,
       enctype: "multipart/formdata",
       data: formdata,
       beforeSend: function () {},
@@ -327,18 +272,81 @@ window.onload = function () {
       },
       success: function (response) {
         console.log(response);
-        // resultHandler(response.sentiment);
-        // chartHandler(response.dataArray);
-        // pointer(response.polarity);
+        spinnerToggle();
+        // console.log("spinner off");
+        resultHandler(response.sentiment);
+        chartHandler(response.dataArray);
+        pointer(response.polarity);
+        // spinnerToggle();
+        // console.log("spinner off");
       },
       error: function () {
         console.log(error);
+        spinnerToggle();
+        resultHandler("Error");
       },
       cache: false,
       contentType: false,
       processData: false,
     });
   });
+
+  // Upload Form Test Type3
+
+  // form.addEventListener("submit", function (e) {
+  //   $("#spinner-box").css({
+  //     height: "fit-content",
+  //     opacity: "1",
+  //     transition: "2s",
+  //   });
+  //   $("#spinner-box").html(
+  //     `<img src="../../static/home/images/Dual Ring-1s-50px.svg" alt="">`
+  //   );
+  //   console.log("spinner on");
+
+  //   e.preventDefault();
+
+  //   const file_data = fileInput.files[0];
+  //   console.log(file_data);
+
+  //   const formdata = new FormData();
+  //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
+  //   formdata.append("file_name", fileInput.files[0]);
+
+  //   $.ajax({
+  //     type: "POST",
+  //     url: form.action,
+  //     enctype: "multipart/formdata",
+  //     data: formdata,
+  //     beforeSend: function () {},
+  //     xhr: function () {
+  //       const xhr = new window.XMLHttpRequest();
+  //       xhr.upload.addEventListener("progress", (e) => {
+  //         if (e.lengthComputable) {
+  //           const loadpercent = (e.loaded / e.total) * 100;
+  //           console.log(loadpercent);
+  //         }
+  //       });
+  //       return xhr;
+  //     },
+  //     success: function (response) {
+  //       console.log(response);
+  //       spinnerToggle();
+  //       console.log("spinner off");
+  //       resultHandler(response.sentiment);
+  //       chartHandler(response.dataArray);
+  //       pointer(response.polarity);
+  //       // spinnerToggle();
+  //       // console.log("spinner off");
+  //     },
+  //     error: function () {
+  //       console.log(error);
+  //     },
+  //     cache: false,
+  //     contentType: false,
+  //     processData: false,
+  //   });
+  // });
   //   fetch("")
   //     .then(function (response) {
   //       return response.json();

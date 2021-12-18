@@ -34,8 +34,7 @@
     <button name="upload-form" class="common-btn search-button" id="upload-submit-btn" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>
   </form>
   <!-- <iframe name="hidden-iframe" style="display: none;"></iframe> -->
-  <div id="alert-box"></div>
-  <div id="progress-bar"></div>
+  <div id="spinner-box"></div>
   <div id="render-container">
     <!-- result items go here -->
   </div>
@@ -114,6 +113,7 @@
   var searchbar = document.getElementById("search-form");
   var heading = document.querySelector(".search-container h1");
   function updatePage() {
+    // change which form is visible
     if (event.target.id == "upload-csv-btn") {
       heading.innerText = "Upload Your File";
       // searchbar.innerHTML =
@@ -137,6 +137,7 @@
       $("#text-form").css({display:"flex"})
     }
 
+    // render container reset
     $("#render-container").html("");
     $("#render-container").css({
       height: "0rem",
@@ -148,7 +149,6 @@
       height: "0rem",
       opacity: "0",
     });
-
     document
       .getElementById("search-container")
       .scrollIntoView({ behavior: "smooth", block: "end" });

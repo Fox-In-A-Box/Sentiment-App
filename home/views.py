@@ -67,8 +67,30 @@ def uploadTest(request):
         print('started')
         if form.is_valid():
             form.save()
-            return JsonResponse({'message': 'hell yeah'}, status=200)
-        else:
+            obj = Csv.objects.get(activated=False)
+            with open(obj.file_name.path, 'r') as f:
+                reader = csv.reader(f)
+
+                for i, row in enumerate(reader):
+                    if i != 0:
+                        print(row)
+                        print(type(row))
+                        CsvTweets.objects.create(
+                            tweets="".join(row)
+                        )
+                tweetObjs = CsvTweets.objects.filter(processed=False).values("tweets")
+                dataframe = pd.DataFrame(tweetObjs)
+                print(dataframe)
+
+                CsvTweets.objects.filter(processed=False).update(processed=True)
+                obj.activated = True
+                obj.save()
+                
+                data = AnalysisCsv.analyse(AnalysisCsv, dataframe)
+                print(AnalysisCsv.analyse(AnalysisCsv, dataframe)['sentiment'])
+                print(AnalysisCsv.analyse(AnalysisCsv, dataframe)['polarity'])
+                # data['type']="text"
+                return JsonResponse(data, status=200)
             print('form not valid')
     else:
         print('nothing happened')        
@@ -127,42 +149,41 @@ class SentimentAnalysisPage(TemplateView):
                     data = AnalysisText.analyse(input)
                     # data['type']="text"
                     return JsonResponse(data, status=200)
-        elif 'file_name' in request.POST:
-            form = CsvModelForm(request.POST, request.FILES)
+        else:
+            form = CsvModelForm(request.POST or None, request.FILES or None)
             if request.is_ajax():
                 print('started')
                 if form.is_valid():
                     form.save()
-                    # form = CsvModelForm()
-                    # obj = Csv.objects.get(activated=False)
-                    # with open(obj.file_name.path, 'r') as f:
-                    #     reader = csv.reader(f)
+                    obj = Csv.objects.get(activated=False)
+                    with open(obj.file_name.path, 'r') as f:
+                        reader = csv.reader(f)
 
-                    #     for i, row in enumerate(reader):
-                    #         if i != 0:
-                    #             print(row)
-                    #             print(type(row))
-                    #             CsvTweets.objects.create(
-                    #                 tweets="".join(row)
-                    #             )
-                    #     tweetObjs = CsvTweets.objects.filter(processed=False).values("tweets")
-                    #     dataframe = pd.DataFrame(tweetObjs)
-                    #     print(dataframe)
+                        for i, row in enumerate(reader):
+                            if i != 0:
+                                print(row)
+                                print(type(row))
+                                CsvTweets.objects.create(
+                                    tweets="".join(row)
+                                )
+                        tweetObjs = CsvTweets.objects.filter(processed=False).values("tweets")
+                        dataframe = pd.DataFrame(tweetObjs)
+                        print(dataframe)
 
-                    #     CsvTweets.objects.filter(processed=False).update(processed=True)
-                    #     obj.activated = True
-                    #     obj.save()
+                        CsvTweets.objects.filter(processed=False).update(processed=True)
+                        obj.activated = True
+                        obj.save()
                         
-                    #     data = AnalysisCsv.analyse(AnalysisCsv, dataframe)
-                    #     print(AnalysisCsv.analyse(AnalysisCsv, dataframe)['sentiment'])
-                    #     print(AnalysisCsv.analyse(AnalysisCsv, dataframe)['polarity'])
-                    #     # data['type']="text"
-                    #     return JsonResponse(data, status=200)
-                    return JsonResponse({'message': 'hell yeah'}, status=200)
-                else:
-                    print('form not valid')
-        else:
-            print('nothing happened')        
+                        data = AnalysisCsv.analyse(AnalysisCsv, dataframe)
+                        print(AnalysisCsv.analyse(AnalysisCsv, dataframe)['sentiment'])
+                        print(AnalysisCsv.analyse(AnalysisCsv, dataframe)['polarity'])
+                        # data['type']="text"
+                        return JsonResponse(data, status=200)
+                #     return JsonResponse({'message': 'hell yeah'}, status=200)
+                # else:
+                #     print('form not valid')
+        # else:
+        #     print('nothing happened')        
         context = {
             'form':form,
             'title':'Sentiment'

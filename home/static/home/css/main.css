@@ -465,6 +465,7 @@ svg {
   height: 100%;
   background: linear-gradient(to bottom, rgb(120 57 249) 30%, #2af4fe 70%);
 }
+
 .form-container {
   display: flex;
   align-items: center;
@@ -517,20 +518,35 @@ svg {
   padding: 0 20px;
   font-size: 18px;
 } */
+#spinner-box {
+  position: absolute;
+  height: fit-content;
+  width: fit-content;
+  opacity: 0;
+  padding: 0px;
+  /* background: white; */
+  border-radius: 8px;
+  display: flex;
+  /* box-shadow: 0 0 35px 0 rgb(0 0 0 / 10%); */
+  justify-content: center;
+  padding: 0.1rem;
+  transform: translateY(17.4rem);
+  align-items: center;
+}
 
 #render-container {
+  overflow: hidden;
   /* width: 10rem; */
   height: 0rem;
   width: fit-content;
   opacity: 0;
   padding: 0px;
-
   background: white;
   border-radius: 8px;
   display: flex;
   box-shadow: 0 0 35px 0 rgb(0 0 0 / 10%);
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 4rem;
   align-items: center;
   transition: 2s;
 }
