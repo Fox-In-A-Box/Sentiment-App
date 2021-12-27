@@ -23,8 +23,9 @@ class CsvTweets(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     processed = models.BooleanField(default=False)
     csv = models.ForeignKey(Csv, on_delete=models.CASCADE, null=True)
+    tweetnum = models.IntegerField()
 
     def __str__(self):
-        return f"File ID: {self.csv.id}, Tweet: {self.id}"
+        return f"File ID: {self.csv.id}, Tweet: {self.tweetnum}"
     
    
