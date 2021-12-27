@@ -16,14 +16,16 @@ class Csv(models.Model):
     activated = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"File id: {self.id}"
+        return f"File ID: {self.id}"
 
 class CsvTweets(models.Model):
     tweets = models.CharField(max_length=280)
     created = models.DateTimeField(auto_now_add=True)
     processed = models.BooleanField(default=False)
+    csv = models.ForeignKey(Csv, on_delete=models.CASCADE, null=True)
+    tweetnum = models.IntegerField(null=True)
 
     def __str__(self):
-        return f"Tweet: {self.id}"
+        return f"File ID: {self.csv.id}, Tweet: {self.tweetnum}"
     
    

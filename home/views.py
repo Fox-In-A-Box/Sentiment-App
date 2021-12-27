@@ -134,7 +134,7 @@ class SentimentAnalysisPage(TemplateView):
                 if form.is_valid():
                     input = form.cleaned_data['text']
                     text = form.save(commit=False)
-                    text.sentiment = AnalysisText.analyse(input)['sentiment'] #for model sheet
+                    text.sentiment = AnalysisText.analyse(input)['sentiment'] #for model sheet, displays on admin page
                     form.save()
                     print(AnalysisText.analyse(input)['sentiment'])
                     print(AnalysisText.analyse(input)['polarity'])
@@ -164,13 +164,14 @@ class SentimentAnalysisPage(TemplateView):
                                 print(row)
                                 print(type(row))
                                 CsvTweets.objects.create(
-                                    tweets="".join(row)
+                                    tweets="".join(row),
+                                    tweetnum=i
                                 )
                         tweetObjs = CsvTweets.objects.filter(processed=False).values("tweets")
                         dataframe = pd.DataFrame(tweetObjs)
                         print(dataframe)
 
-                        CsvTweets.objects.filter(processed=False).update(processed=True)
+                        CsvTweets.objects.filter(processed=False).update(processed=True, csv=form.save().pk)
                         obj.activated = True
                         obj.save()
                         
