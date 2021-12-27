@@ -120,8 +120,8 @@ class SentimentAnalysisPage(TemplateView):
             if form.is_valid():
                 # print(form)
                 live_tweet = form.cleaned_data['live_tweet']
-                print(AnalysisLiveTweet.analyse(AnalysisLiveTweet, live_tweet)['sentiment'])
-                print(AnalysisLiveTweet.analyse(AnalysisLiveTweet, live_tweet)['polarity'])
+                # print(AnalysisLiveTweet.analyse(AnalysisLiveTweet, live_tweet)['sentiment'])
+                # print(AnalysisLiveTweet.analyse(AnalysisLiveTweet, live_tweet)['polarity'])
 
 
                 data = AnalysisLiveTweet.analyse(AnalysisLiveTweet,live_tweet)

@@ -9,7 +9,6 @@
     
       {{ typeForm }}
     
-    <!-- <input type="hidden" name="form_type" value="text"> -->
     <button name="text-form" class="common-btn search-button" id="text-submit-btn" type="submit">
       Submit
     </button>
@@ -19,7 +18,6 @@
     {% csrf_token %}
 
       {{ liveForm }}
-    <!-- <input type="hidden" name="form_type" value="text"> -->
     <button name="live-form" class="common-btn search-button" id="live-submit-btn" type="submit">
       Submit
     </button>
@@ -30,10 +28,8 @@
 
       {{ uploadForm }}
 
-    <!-- <input type="hidden" name="form_type" value="text"> -->
     <button name="upload-form" class="common-btn search-button" id="upload-submit-btn" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>
   </form>
-  <!-- <iframe name="hidden-iframe" style="display: none;"></iframe> -->
   <div id="spinner-box"></div>
   <div id="render-container">
     <!-- result items go here -->

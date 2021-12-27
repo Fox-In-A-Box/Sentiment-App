@@ -544,11 +544,24 @@ svg {
   background: white;
   border-radius: 8px;
   display: flex;
-  box-shadow: 0 0 35px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0 0 35px 0 rgba(29, 27, 27, 0.1);
   justify-content: center;
   margin-top: 4rem;
   align-items: center;
   transition: 2s;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#render-container::after {
+  color: #000;
+  content: "\f067"; /* You should use \ and not /*/
+  display: block;
+  font-family: "Font Awesome 5 Free"; /* This is the correct font-family*/
+  font-weight: 900;
+  font-size: 17px;
+  /* margin-bottom: 10rem; */
+  cursor: pointer;
 }
 #result-box {
   height: 0rem;
@@ -664,6 +677,11 @@ svg {
   position: relative;
   border-left: 1px #cccccc5c groove;
   transition: 2s ease 1s;
+}
+.line-chart {
+  height: fit-content;
+  width: 100%;
+  margin-top: 2rem;
 }
 .search-container form input {
   flex: 1;

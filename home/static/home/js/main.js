@@ -4,9 +4,12 @@ window.onload = function () {
 
   const csrf = document.getElementsByName("csrfmiddlewaretoken");
   // const progressBar = document.getElementsByClassName("progress-bar");
+
+  // Buttons
   const textForm = document.getElementById("text-form");
   const liveForm = document.getElementById("live-form");
   const uploadedForm = document.getElementById("upload-form");
+  const details = document.getElementById("details");
 
   const text = document.getElementById("id_text");
   const liveTweet = document.getElementById("id_live_tweet");
@@ -15,6 +18,8 @@ window.onload = function () {
 
   const alertBox = document.getElementById("alert-box");
   const progressBar = document.getElementById("progress-bar");
+
+  MA = MA_window = MA_polarity = "";
 
   // For FormData and Graphical Results
   const resultHandler = (text) => {
@@ -53,18 +58,19 @@ window.onload = function () {
     });
   };
 
-  const chartHandler = (dataArray) => {
+  const pieChartHandler = (dataArray) => {
     dataArray = dataArray.map((num) => Math.round(num * 100));
     renderContainer.innerHTML += `
     <div class="chart">
          <canvas id="pie-chart" aria-label="Sentiment of Tweet Entered" role="img"></canvas>
     </div>`;
+    // <div class="details-cross"></div>
     $(".chart").css({
       opacity: "1",
     });
     // Pie CHart
     const ctx = document.getElementById("pie-chart").getContext("2d");
-    const myChart = new Chart(ctx, {
+    const pieChart = new Chart(ctx, {
       type: "pie",
       data: {
         labels: ["Positive", "Neutral", "Negative"],
@@ -125,11 +131,133 @@ window.onload = function () {
       },
     });
 
-    setTimeout(function (chart = myChart) {
+    setTimeout(function (chart = pieChart) {
+      chart.options.animation.delay = 0;
+      chart.update();
+      console.log("pie update triggered");
+    }, 3500);
+  };
+
+  const lineChartHandler = (MA, MA_window, MA_polarity, MA_timestamps) => {
+    renderContainer.innerHTML += `
+    <div class="line-chart">
+         <canvas id="line-chart" aria-label="${MA_window} Tweet Sentiment Moving Average" role="img"></canvas>
+    </div>`;
+    $(".line-chart").css({
+      opacity: "1",
+    });
+    // Line CHart
+
+    const lctx = document.getElementById("line-chart").getContext("2d");
+
+    data = MA_polarity;
+    data2 = MA;
+    // Animation
+    // const totalDuration = 5000;
+    // const delayBetweenPoints = totalDuration / data.length;
+    // const previousY = (lctx) =>
+    //   lctx.index === 0
+    //     ? lctx.chart.scales.y.getPixelForValue(100)
+    //     : lctx.chart
+    //         .getDatasetMeta(lctx.datasetIndex)
+    //         .data[lctx.index - 1].getProps(["y"], true).y;
+    // const animation = {
+    //   x: {
+    //     type: "number",
+    //     easing: "linear",
+    //     duration: delayBetweenPoints,
+    //     from: NaN, // the point is initially skipped
+    //     delay(lctx) {
+    //       if (lctx.type !== "data" || lctx.xStarted) {
+    //         return 0;
+    //       }
+    //       lctx.xStarted = true;
+    //       return lctx.index * delayBetweenPoints;
+    //     },
+    //   },
+    //   y: {
+    //     type: "number",
+    //     easing: "linear",
+    //     duration: delayBetweenPoints,
+    //     from: previousY,
+    //     delay(lctx) {
+    //       if (lctx.type !== "data" || lctx.yStarted) {
+    //         return 0;
+    //       }
+    //       lctx.yStarted = true;
+    //       return lctx.index * delayBetweenPoints;
+    //     },
+    //   },
+    // };
+
+    // Chart
+    const lineChart = new Chart(lctx, {
+      type: "line",
+      data: {
+        labels: MA_timestamps,
+        datasets: [
+          {
+            label: "Moving Average",
+            data: data2,
+            borderWidth: 2,
+            borderColor: "rgb(54, 162, 235)",
+            backgroundColor: "rgba(54, 162, 235, 0.5)",
+            tension: 0.4,
+          },
+          {
+            label: "Polarity",
+            data: data,
+            borderWidth: 1.5,
+            borderColor: "rgb(255, 99, 132)",
+            backgroundColor: "rgba(255, 99, 132, 0.5)",
+          },
+        ],
+      },
+      options: {
+        fill: false,
+        interaction: {
+          intersect: false,
+        },
+        radius: 0,
+        responsive: true,
+        plugins: {
+          legend: {
+            title: {
+              display: true,
+              text: `${MA_window} Tweet Sentiment Moving Average`,
+              font: {
+                family: "'Poppins', sans-serif",
+              },
+            },
+            labels: {
+              boxWidth: 10,
+              boxHeight: 10,
+              font: {
+                family: "'Poppins', sans-serif",
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              // font: {
+              //   size: 5,
+              // },
+              callback: () => "",
+            },
+          },
+        },
+      },
+    });
+
+    setTimeout(function (chart = lineChart) {
       chart.options.animation.delay = 0;
       chart.update();
     }, 3500);
   };
+
+  // details.addEventListener("click", (event) => {});
 
   const pointer = (polarity) => {
     percent = 318 + ((polarity + 1) / 2) * 179;
@@ -199,7 +327,7 @@ window.onload = function () {
         console.log(response);
         spinnerToggle();
         resultHandler(response.sentiment);
-        chartHandler(response.dataArray);
+        pieChartHandler(response.dataArray);
         pointer(response.polarity);
       },
       error: function () {
@@ -231,8 +359,17 @@ window.onload = function () {
         console.log(response);
         spinnerToggle();
         resultHandler(response.sentiment);
-        chartHandler(response.dataArray);
+        pieChartHandler(response.dataArray);
+        lineChartHandler(
+          response.MA,
+          response.MA_window,
+          response.MA_polarity,
+          response.MA_timestamps
+        );
         pointer(response.polarity);
+        // MA = response.MA;
+        // MA_window = response.MA_window;
+        // MA_polarity = response.MA_polarity;
       },
       error: function () {
         console.log(error);
@@ -275,7 +412,7 @@ window.onload = function () {
         spinnerToggle();
         // console.log("spinner off");
         resultHandler(response.sentiment);
-        chartHandler(response.dataArray);
+        pieChartHandler(response.dataArray);
         pointer(response.polarity);
         // spinnerToggle();
         // console.log("spinner off");
@@ -334,7 +471,7 @@ window.onload = function () {
   //       spinnerToggle();
   //       console.log("spinner off");
   //       resultHandler(response.sentiment);
-  //       chartHandler(response.dataArray);
+  //       pieChartHandler(response.dataArray);
   //       pointer(response.polarity);
   //       // spinnerToggle();
   //       // console.log("spinner off");
@@ -354,7 +491,7 @@ window.onload = function () {
   //     .then(function (response) {
   //       console.log(response);
   //       resultHandler(response.sentiment);
-  //       chartHandler(response.dataArray);
+  //       pieChartHandler(response.dataArray);
   //       pointer(response.polarity);
   //     });
   // });
