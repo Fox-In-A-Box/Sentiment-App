@@ -6,12 +6,14 @@ window.onload = function () {
   // const progressBar = document.getElementsByClassName("progress-bar");
 
   // Buttons
-  const textForm = document.getElementById("text-form");
+  // const textForm = document.getElementById("text-form");
+  const textForm = document.getElementById("search-form");
   const liveForm = document.getElementById("live-form");
   const uploadedForm = document.getElementById("upload-form");
   const details = document.getElementById("details");
 
-  const text = document.getElementById("id_text");
+  // const text = document.getElementById("id_text");
+  const text = document.querySelector("input[name=text]");
   const liveTweet = document.getElementById("id_live_tweet");
   const fileInput = document.getElementById("id_file_name");
   console.log(fileInput);
@@ -22,13 +24,13 @@ window.onload = function () {
   MA = MA_window = MA_polarity = "";
 
   // For FormData and Graphical Results
-  const resultHandler = (text) => {
-    if (text == "Negative") {
-      emoji_image = `<img src="../../static/home/images/angry2.png" alt="angry face emoji" /><p>${text}</p>`;
-    } else if (text == "Positive") {
-      emoji_image = `<img src="../../static/home/images/good2.png" alt="angry face emoji" /><p>${text}</p>`;
+  const resultHandler = (sentiment) => {
+    if (sentiment == "Negative") {
+      emoji_image = `<img src="../../static/home/images/angry2.png" alt="angry face emoji" /><p>${sentiment}</p>`;
+    } else if (sentiment == "Positive") {
+      emoji_image = `<img src="../../static/home/images/good2.png" alt="angry face emoji" /><p>${sentiment}</p>`;
     } else {
-      emoji_image = `<img src="../../static/home/images/neutral2.png" alt="angry face emoji" /><p>${text}</p>`;
+      emoji_image = `<img src="../../static/home/images/neutral2.png" alt="angry face emoji" /><p>${sentiment}</p>`;
     }
     renderContainer.innerHTML = `
     <div id="result-box">
@@ -323,6 +325,8 @@ window.onload = function () {
       type: "POST",
       url: "",
       data: formdata,
+      contentType: "application/json",
+      dataType: "json",
       success: function (response) {
         console.log(response);
         spinnerToggle();
@@ -330,7 +334,7 @@ window.onload = function () {
         pieChartHandler(response.dataArray);
         pointer(response.polarity);
       },
-      error: function () {
+      error: function (error) {
         console.log(error);
       },
       cache: false,
@@ -339,94 +343,94 @@ window.onload = function () {
     });
   });
 
-  liveForm.addEventListener("submit", (e) => {
-    spinnerToggle();
-    e.preventDefault();
+  // liveForm.addEventListener("submit", (e) => {
+  //   spinnerToggle();
+  //   e.preventDefault();
 
-    const formdata = new FormData();
-    formdata.append("csrfmiddlewaretoken", csrf[0].value);
+  //   const formdata = new FormData();
+  //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
 
-    console.log(liveTweet);
-    console.log(liveTweet.value);
-    formdata.append("live_tweet", liveTweet.value);
+  //   console.log(liveTweet);
+  //   console.log(liveTweet.value);
+  //   formdata.append("live_tweet", liveTweet.value);
 
-    // For Form
-    $.ajax({
-      type: "POST",
-      url: "",
-      data: formdata,
-      success: function (response) {
-        console.log(response);
-        spinnerToggle();
-        resultHandler(response.sentiment);
-        pieChartHandler(response.dataArray);
-        lineChartHandler(
-          response.MA,
-          response.MA_window,
-          response.MA_polarity,
-          response.MA_timestamps
-        );
-        pointer(response.polarity);
-        // MA = response.MA;
-        // MA_window = response.MA_window;
-        // MA_polarity = response.MA_polarity;
-      },
-      error: function () {
-        console.log(error);
-      },
-      cache: false,
-      contentType: false,
-      processData: false,
-    });
-  });
+  //   // For Form
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "",
+  //     data: formdata,
+  //     success: function (response) {
+  //       console.log(response);
+  //       spinnerToggle();
+  //       resultHandler(response.sentiment);
+  //       pieChartHandler(response.dataArray);
+  //       lineChartHandler(
+  //         response.MA,
+  //         response.MA_window,
+  //         response.MA_polarity,
+  //         response.MA_timestamps
+  //       );
+  //       pointer(response.polarity);
+  //       // MA = response.MA;
+  //       // MA_window = response.MA_window;
+  //       // MA_polarity = response.MA_polarity;
+  //     },
+  //     error: function () {
+  //       console.log(error);
+  //     },
+  //     cache: false,
+  //     contentType: false,
+  //     processData: false,
+  //   });
+  // });
 
-  uploadedForm.addEventListener("submit", function (e) {
-    spinnerToggle();
-    e.preventDefault();
+  // uploadedForm.addEventListener("submit", function (e) {
+  //   spinnerToggle();
+  //   e.preventDefault();
 
-    const file_data = fileInput.files[0];
-    console.log(file_data);
+  //   const file_data = fileInput.files[0];
+  //   console.log(file_data);
 
-    const formdata = new FormData();
-    formdata.append("csrfmiddlewaretoken", csrf[0].value);
-    formdata.append("file_name", fileInput.files[0]);
+  //   const formdata = new FormData();
+  //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
+  //   formdata.append("file_name", fileInput.files[0]);
 
-    $.ajax({
-      type: "POST",
-      url: uploadedForm.action,
-      enctype: "multipart/formdata",
-      data: formdata,
-      beforeSend: function () {},
-      xhr: function () {
-        const xhr = new window.XMLHttpRequest();
-        xhr.upload.addEventListener("progress", (e) => {
-          if (e.lengthComputable) {
-            const loadpercent = (e.loaded / e.total) * 100;
-            console.log(loadpercent);
-          }
-        });
-        return xhr;
-      },
-      success: function (response) {
-        console.log(response);
-        spinnerToggle();
-        // console.log("spinner off");
-        resultHandler(response.sentiment);
-        pieChartHandler(response.dataArray);
-        pointer(response.polarity);
-        // spinnerToggle();
-        // console.log("spinner off");
-      },
-      error: function () {
-        console.log(error);
-        spinnerToggle();
-        resultHandler("Error");
-      },
-      cache: false,
-      contentType: false,
-      processData: false,
-    });
-  });
+  //   $.ajax({
+  //     type: "POST",
+  //     url: uploadedForm.action,
+  //     enctype: "multipart/formdata",
+  //     data: formdata,
+  //     beforeSend: function () {},
+  //     xhr: function () {
+  //       const xhr = new window.XMLHttpRequest();
+  //       xhr.upload.addEventListener("progress", (e) => {
+  //         if (e.lengthComputable) {
+  //           const loadpercent = (e.loaded / e.total) * 100;
+  //           console.log(loadpercent);
+  //         }
+  //       });
+  //       return xhr;
+  //     },
+  //     success: function (response) {
+  //       console.log(response);
+  //       spinnerToggle();
+  //       // console.log("spinner off");
+  //       resultHandler(response.sentiment);
+  //       pieChartHandler(response.dataArray);
+  //       pointer(response.polarity);
+  //       // spinnerToggle();
+  //       // console.log("spinner off");
+  //     },
+  //     error: function () {
+  //       console.log(error);
+  //       spinnerToggle();
+  //       resultHandler("Error");
+  //     },
+  //     cache: false,
+  //     contentType: false,
+  //     processData: false,
+  //   });
+  // });
 
   // Upload Form Test Type3
 

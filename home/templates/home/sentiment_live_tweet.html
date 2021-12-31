@@ -1,4 +1,5 @@
 {% extends "home/base.html" %} {% block content %}
+{% load rest_framework %}
 <div class="purple-background"></div>
 <div class="search-container" id="search-container">
   <div class="search-background"></div>
@@ -7,7 +8,7 @@
   <form class="search-form" id="text-form" method="post">
     {% csrf_token %}
     
-      {{ typeForm }}
+      {% render_form typeSerializer %}
     
     <button name="text-form" class="common-btn search-button" id="text-submit-btn" type="submit">
       Submit
@@ -17,7 +18,7 @@
   <form class="search-form" id="live-form" method="post" >
     {% csrf_token %}
 
-      {{ liveForm }}
+      {% render_form liveTweetSerializer  %}
     <button name="live-form" class="common-btn search-button" id="live-submit-btn" type="submit">
       Submit
     </button>
@@ -26,7 +27,7 @@
   <form class="search-form" action="" id="upload-form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-      {{ uploadForm }}
+      {% render_form uploadSerializer %}
 
     <button name="upload-form" class="common-btn search-button" id="upload-submit-btn" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>
   </form>

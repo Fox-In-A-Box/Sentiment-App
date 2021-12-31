@@ -1,4 +1,5 @@
 {% extends "home/base.html" %} {% block content %}
+{% load rest_framework %}
 <div class="purple-background"></div>
 <div class="search-container" id="search-container">
   <div class="search-background"></div>
@@ -11,7 +12,8 @@
       placeholder="Enter any search query, #hashtag or @user_tag"
       name="live-tweets-form"
     /> -->
-    {{ form }}
+    <!-- {% render_form serializer %} -->
+    {% render_field serializer.text style=style %}
     <button class="common-btn search-button" id="submit-btn" type="submit">
       Submit
     </button>

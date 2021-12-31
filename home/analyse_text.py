@@ -29,4 +29,8 @@ class AnalysisText():
         else:
             res = "Neutral"
         
-        return {'text': text, 'sentiment': res, 'polarity':polarity, 'dataArray': dataArray}
+        return { 
+            'sentiment': res, 
+            'polarity':polarity, 
+            'dataArray': dataArray
+            }

@@ -96,8 +96,9 @@ class AnalysisLiveTweet():
         val=10
         visualMA['MA Polarity'] = visualMA.Polarity.rolling(val, min_periods=1).mean()
 
-
+        # pos, neg or neu
         res = self.results(self, df2)
+        # number
         polarity = df2['Polarity'].iloc[0]
         dataArray = [df2['Positive'].iloc[0], df2['Neutral'].iloc[0],df2['Negative'].iloc[0]]
         MA = visualMA['MA Polarity'].tolist()
@@ -106,7 +107,15 @@ class AnalysisLiveTweet():
         MA_original_polarity = visualMA['Polarity'].tolist()
         # print(MA_original_polarity)
 
-        return {'text': text, 'sentiment': res, 'polarity':polarity, 'dataArray': dataArray, 'MA':MA, 'MA_window': val, 'MA_polarity':MA_original_polarity, 'MA_timestamps': MA_timestamps}
+        return { 
+            'sentiment': res, 
+            'polarity':polarity, 
+            'dataArray': dataArray, 
+            'MA':MA, 
+            'MA_window': val, 
+            'MA_polarity':MA_original_polarity, 
+            'MA_timestamps': MA_timestamps
+            }
 
 
         
