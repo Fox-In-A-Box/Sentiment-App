@@ -212,13 +212,22 @@ class liveTweetTest(APIView):
 #     }
 #     return render(request, 'home/sentiment_type.html', context)
 
-class uploadTest(generics.GenericAPIView, mixins.CreateModelMixin):
+class uploadTest(generics.GenericAPIView, mixins.CreateModelMixin, mixins.RetrieveModelMixin ):
     serializer_class = CsvSerializer
-    queryset = Csv.objects.all()
+    # queryset = Csv.objects.latest('uploaded')
 
+    def get_object(self):
+        try:
+            return Csv.objects.latest('uploaded')
+        except:
+            pass
 
+    def get(self, request):
+        return self.retrieve(request)
+    
     def perform_create(self, serializer):
         instance = serializer.save()
+        # serializer.save()
         with open(instance.file_name.path, 'r') as f:
             reader = csv.reader(f)
 
@@ -230,14 +239,24 @@ class uploadTest(generics.GenericAPIView, mixins.CreateModelMixin):
                         csv=instance
                         )
 
-        tweetObjs = CsvTweets.objects.filter(processed=False).values("tweets")
+        tweetObjs = CsvTweets.objects.filter(csv=instance).values("tweets")
         dataframe = pd.DataFrame(tweetObjs)
-        # print(dataframe)
-        
 
-        CsvTweets.objects.filter(processed=False).update(processed=True)
+        rowData = AnalysisCsv.analyseRow(AnalysisCsv, dataframe)
         analysisData = AnalysisCsv.analyse(AnalysisCsv, dataframe)
-        serializer.save(activated=True,sentiment=analysisData['sentiment'], polarity=analysisData['polarity'])
+
+        for i in range(CsvTweets.objects.filter(csv=instance).count()):
+            CsvTweets.objects.filter(tweetnum=i+1).update(
+                sentiment = rowData['sentiment'][i],
+                polarity = rowData['polarity'][i]
+                )
+        # print(dataframe)
+        serializer.save(sentiment=analysisData['sentiment'], polarity=analysisData['polarity'])
+
+        # csvObjs = Csv.objects.latest('uploaded')
+        # d_rules = csvObjs.csv_tweets.all().tweets
+        # print(csvObjs)
+        # print(d_rules)
         # newdict={
         #     'dataArray': analysisData['dataArray'],
         #     }
@@ -293,49 +312,6 @@ class uploadTest(generics.GenericAPIView, mixins.CreateModelMixin):
 #         'title':'Sentiment'
 #     }
 #     return render(request, 'home/sentiment_type.html', context)
-
-
-class textSentimentAPI(generics.GenericAPIView, mixins.CreateModelMixin):
-    serializer_class = CsvSerializer
-    queryset = Csv.objects.all()
-    def perform_create(self, serializer):
-        data = request.data
-        input = data['text']
-        analysisData = AnalysisText.analyse(input)
-        data['sentiment'] = analysisData['sentiment']
-        data['polarity'] = analysisData['polarity']
-        serializer.save()
-    def post(self, request):
-    # print(request.POST)
-        
-
-        serializer = TextSerializer(data=request.data)
-        # if request.is_ajax():
-        #     form = TextForm(request.POST)
-        if serializer.is_valid():
-            # input = serializer.validated_data['text']
-            # data = AnalysisText.analyse(input)
-            
-            # print('got here')
-            
-            # serializer.validated_data['sentiment'] =  data['sentiment']
-            # serializer.validated_data['polarity'] =  data['polarity']
-            serializer.save()
-
-            # print(data['sentiment'])
-            # print(data['polarity'])
-            print(serializer.data)
-            newdict={"dataArray": analysisData['dataArray']}
-            newdict.update(serializer.data)
-
-            return Response(newdict, status=status.HTTP_201_CREATED)    
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-
 
 
 class SentimentAnalysisPage(APIView):

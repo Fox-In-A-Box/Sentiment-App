@@ -24,19 +24,17 @@ class Csv(models.Model):
     file_name = models.FileField(max_length=200,upload_to='csvs')
     sentiment = models.CharField(max_length=10, null=True)
     polarity = models.FloatField(null=True)
-    activated = models.BooleanField(default=False)
     uploaded = models.DateTimeField(auto_now_add=True)
-    # activated = models.BooleanField(default=False)
 
     def __str__(self):
         return f"File ID: {self.id}"
 
 class CsvTweets(models.Model):
-    tweets = models.CharField(max_length=280)
-    created = models.DateTimeField(auto_now_add=True)
-    processed = models.BooleanField(default=False)
-    csv = models.ForeignKey(Csv,on_delete=models.CASCADE,null=True)
     tweetnum = models.IntegerField(null=True)
+    tweets = models.CharField(max_length=280)
+    sentiment = models.CharField(max_length=10, null=True)
+    polarity = models.FloatField(null=True)
+    csv = models.ForeignKey(Csv,on_delete=models.CASCADE, related_name="csv_tweets",null=True)
 
     def __str__(self):
         return f"{self.csv}, Tweet: {self.tweetnum}"

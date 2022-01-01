@@ -18,6 +18,28 @@ class AnalysisCsv():
                 return "Positive"
             else:
                 return "Neutral"
+    def rowResults(self, polarity):
+            if polarity<-0.05:
+                return "Negative"
+            elif polarity>0.05:
+                return "Positive"
+            else:
+                return "Neutral"
+    def analyseRow(self, df):
+        #Mia (MIA) discovered to have negative polarity score due to Vader lack of Name Recognition. Hence, included in stopwards
+        custom_stopwords = ['RT', 'Mia']
+
+        df['Processed Tweet'] = df['tweets'].apply(lambda x: self.preprocess_tweets(self, x, custom_stopwords))
+
+        # calculate the mean of the polarity scores of each sentence in a tweet
+        # polarity tested to be slightly more accurate when sentence is tokenised
+
+        df['Polarity'] = df['Processed Tweet'].apply(lambda x: np.mean([analyzer.polarity_scores(x)['compound'] for sent in sent_tokenize(x)]))
+        df['Sentiment'] = df['Polarity'].apply(lambda x: self.rowResults(self, x))
+        
+        sentiment =  df['Sentiment'].tolist()
+        polarity = df['Polarity'].tolist()
+        return {'sentiment': sentiment, 'polarity':polarity}
 
     def analyse(self, df):
         #Mia (MIA) discovered to have negative polarity score due to Vader lack of Name Recognition. Hence, included in stopwards

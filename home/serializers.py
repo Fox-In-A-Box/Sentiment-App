@@ -30,25 +30,21 @@ class LiveTweetSerializer(serializers.ModelSerializer):
         model = LiveTweet
         fields = ['live_tweet','date_submitted','sentiment','polarity', 'MA_window']
 
-class CsvSerializer(serializers.ModelSerializer):
-    # id = serializers.ReadOnlyField()
-
-    # file_name = serializers.FileField(max_length=200,use_url=False)
-
-    class Meta:
-        model = Csv
-        fields = ['id', 'file_name','activated', 'uploaded','sentiment','polarity']
-        
+       
 class CsvTweetsSerializer(serializers.ModelSerializer):
-    # csv_id = serializers.Field(source='csv.id')
+    class Meta:
+        model = CsvTweets
+        fields = ['tweetnum','tweets','sentiment','polarity',]
+
+class CsvTweetsforCsvSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CsvTweets
+        fields = ['id','tweetnum','tweets','sentiment','polarity',]
+        
+class CsvSerializer(serializers.ModelSerializer):
+    csv_tweets= CsvTweetsforCsvSerializer(many=True, read_only=True)
+
     class Meta:
         model = Csv
-        fields = ['tweets','created','processed','csv','tweetnum']
-            # for i, row in enumerate(reader):
-            #     if i != 0:
-            #         print(row)
-            #         print(type(row))
-            #         CsvTweets.objects.create(
-            #             tweets="".join(row),
-            #             tweetnum=i
-            #         )
+        fields = ['id', 'file_name', 'uploaded','sentiment','polarity','csv_tweets']
+        depth = 1
