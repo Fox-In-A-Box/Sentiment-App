@@ -1,0 +1,49 @@
+{% extends "./base.html" %} {% block content %}
+
+<!-- Section 1 : Header Banner -->
+<!-- must have margin-top: 180px in css or nav bar will be displaced -->
+<div class="header-colour"></div>
+<div class="about-container">
+  <div class="about-img">
+    <!-- id="10015.io"
+      viewBox="0 50 480 480"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      transform="scale(.8 0.75)
+      translate(0 -70)"
+       -->
+    <svg
+      id="10015.io"
+      viewBox="0 50 480 480"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      transform="scale(.8 0.75)
+      translate(0 -70)"
+    >
+      <path
+        fill="#e7eefe"
+        d="M386.5,324Q337,408,240,408Q143,408,93.5,324Q44,240,86.5,143.5Q129,47,228,68.5Q327,90,381.5,165Q436,240,386.5,324Z"
+      />
+      <!-- <path
+        fill="#e7eefe"
+        d="M359.5,314Q326,388,243.5,382.5Q161,377,106.5,308.5Q52,240,107,172.5Q162,105,255.5,78Q349,51,371,145.5Q393,240,359.5,314Z"
+      /> -->
+    </svg>
+    <img
+      src="../../static/./images/About.png"
+      alt="tiny people analysing data illustration"
+    />
+  </div>
+  <section class="about-text">
+    <h1>About</h1>
+    <p>
+      This tool utilises the Twitter API to search for tweets containing the
+      provided search query, hashtag or @user tag. Those tweets are then
+      processed using VADER Sentiment and NLTK to produce a sentiment polarity
+      representivity of the tweets' contents.<br /><br />
+      For a look into the code behind this project, you can check it out
+      <a href="#">here on Github</a>.
+    </p>
+  </section>
+  {% endblock content %}
+</div>

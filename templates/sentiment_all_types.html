@@ -1,0 +1,159 @@
+{% extends "./base.html" %} {% block content %}
+{% load rest_framework %}
+<div class="purple-background"></div>
+<div class="search-container" id="search-container">
+  <div class="search-background"></div>
+  <h1>Type Your Tweet</h1>
+  <!-- <div class="form-container"> -->
+  <form class="search-form" action="" id="text-form"">
+    {% csrf_token %}
+    <!-- <input
+      type="text"
+      placeholder="Enter any search query, #hashtag or @user_tag"
+      name="live-tweets-form"
+    /> -->
+    <!-- {% render_form serializer %} -->
+    {% render_field serializer.text style=style %}
+    <button class="common-btn search-button" id="submit-btn" type="submit">
+      Submit
+    </button>
+  </form>
+  <form class="search-form" action="" id="live-form" method="post" >
+    {% csrf_token %}
+
+      {% render_field serializer2.live_tweet style=style2 %}
+    <button name="live-form" class="common-btn search-button" id="live-submit-btn" type="submit">
+      Submit
+    </button>
+  </form>
+  <form class="search-form" action="" id="upload-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+      {% render_field serializer3.file_name style=style3 %}
+
+    <button name="upload-form" class="common-btn search-button" id="upload-submit-btn" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>
+  </form>
+  <div id="spinner-box"><img src="../../static/./images/Dual Ring-1s-50px.svg" alt=""></div>
+  <!-- <div id="details-box"><i id="details" class="fas fa-plus"></i></div> -->
+  <div id="render-container">
+    
+    <!-- result items go here -->
+  </div>
+  <div class="slide-up-items">
+    <p class=>Or choose another option below:</p>
+    <img src="../../static/./images/swirly-arrow.png" alt="" />
+  </div>
+</div>
+<div class="card-container">
+  <div class="card no-flip">
+    <div class="card-content no-flip">
+      <div class="card-front">
+        <div class="flip-icons search-icons">
+          <img
+            src="https://img.icons8.com/ios-glyphs/60/000000/open-document.png"
+          />
+        </div>
+
+        <h3 class="card-title">Upload a .csv file</h3>
+        <p class="card-subtitle search-text">
+          Have sentiment analysis performed on your own .csv files
+        </p>
+        <button
+          class="card-btn card-btn-front scroll-up-btn"
+          id="upload-csv-btn"
+          onclick="updatePage()"
+        >
+          Start
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card no-flip">
+    <div class="card-content no-flip">
+      <div class="card-front">
+        <div class="flip-icons search-icons">
+          <i class="fab fa-twitter"></i>
+        </div>
+        <h3 class="card-title">Use Live Tweets</h3>
+        <p class="card-subtitle search-text">
+          Analyse the sentiment of your search query, hashtag or user tag
+        </p>
+        <button
+          class="card-btn card-btn-front scroll-up-btn"
+          id="live-tweet-btn"
+          onclick="updatePage()"
+        >
+          Start
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card no-flip">
+    <div class="card-content no-flip">
+      <div class="card-front">
+        <div class="flip-icons search-icons">
+          <img src="https://img.icons8.com/ios/60/000000/keyboard.png" />
+        </div>
+
+        <h3 class="card-title">Type Your Tweet</h3>
+        <p class="card-subtitle search-text">
+          Type in your own tweet in raw format and have it's sentiment analysed
+        </p>
+        <button
+          class="card-btn card-btn-front scroll-up-btn"
+          id="type-tweet-btn"
+          onclick="updatePage()"
+        >
+          Start
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var searchbar = document.getElementById("search-form");
+  var heading = document.querySelector(".search-container h1");
+  function updatePage() {
+    // change which form is visible
+    if (event.target.id == "upload-csv-btn") {
+      heading.innerText = "Upload Your File";
+      // searchbar.innerHTML =
+      //   '{% csrf_token %} {{uploadForm}} <input type="hidden" name="form_type" value="upload_file"><button class="common-btn search-button" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>';
+      $("#upload-form").css({display:"flex"})
+      $("#live-form").css({display:"none"})
+      $("#text-form").css({display:"none"})
+    } else if (event.target.id == "live-tweet-btn") {
+      heading.innerText = "Search Anything on Twitter";
+      // searchbar.innerHTML =
+      //   '{% csrf_token %}{{liveForm}}  <input type="hidden" name="form_type" value="live_tweet"><button class="common-btn search-button" type="submit">Submit</button>';
+      $("#upload-form").css({display:"none"})
+      $("#live-form").css({display:"flex"})
+      $("#text-form").css({display:"none"})
+    } else if (event.target.id == "type-tweet-btn") {
+      heading.innerText = "Type Your Own Tweet";
+      // searchbar.innerHTML =
+      //   '{% csrf_token %}{{typeForm}} <input type="hidden" name="form_type" value="text"><button class="common-btn search-button" type="submit">Submit</button>';
+      $("#upload-form").css({display:"none"})
+      $("#live-form").css({display:"none"})
+      $("#text-form").css({display:"flex"})
+    }
+
+    // render container reset
+    $("#render-container").html("");
+    $("#render-container").css({
+      height: "0rem",
+      opacity: "0",
+      padding: "0px",
+      transition: "none",
+    });
+    $("#result-box").css({
+      height: "0rem",
+      opacity: "0",
+    });
+    document
+      .getElementById("search-container")
+      .scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+
+</script>
+{% endblock content %}
