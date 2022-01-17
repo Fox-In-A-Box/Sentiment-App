@@ -18,13 +18,15 @@ access_token_secret = 'jfPtqGTdXBBXkJihJeyIN2hebN0fxTznIi43wXfM11T63'
 
 class AnalysisLiveTweet():
     def preprocess_tweets(self, tweet, custom_stopwords):
-    # Remove @user and links
+        # Remove  @user, links, hashtags and  new lines from text
         preprocessed_tweet = re.sub("(?:\@|https?\://)\S+|#|\n"," ",tweet).split()
-    # Remove custom stopwords
+        # Remove stopwards
         preprocessed_tweet = [word for word in preprocessed_tweet if word not in custom_stopwords]
+        # Turn list back into string
         return(' '.join(preprocessed_tweet))
 
     def results(self, dataframe):
+        # take polarity column from mean calculated dataframe and return the sentiment based on the polarity number
             if dataframe['Polarity'].iloc[0]<-0.05:
                 return "Negative"
             elif dataframe['Polarity'].iloc[0]>0.05:
@@ -40,11 +42,12 @@ class AnalysisLiveTweet():
 
         searchTerm = text
         itemcount = 100;
-        query = tw.Cursor(api.search_tweets, q=searchTerm, lang='en').items(itemcount)
-        try:
+        if searchTerm[0]=='@':
+            query = tw.Cursor(api.user_timeline, screen_name=searchTerm[1:], include_rts = False, tweet_mode = 'extended').items(itemcount)
+            tweets = [{'Tweets':tweet.full_text, 'Timestamp':parse(tweet.created_at.strftime('%H:%M:%S'))} for tweet in query]
+        else:    
+            query = tw.Cursor(api.search_tweets, q=searchTerm, lang='en').items(itemcount)
             tweets = [{'Tweets':tweet.text, 'Timestamp':parse(tweet.created_at.strftime('%H:%M:%S'))} for tweet in query]
-        except:
-            print("possible timeout")
 
     # Add milliseconds to any tweets that have the same timestamp so that they can be spaced better on moving average line graph
         add = 0
