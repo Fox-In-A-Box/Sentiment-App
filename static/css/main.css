@@ -306,6 +306,10 @@ svg {
   outline: none;
   color: #7837f8;
 }
+.change-image-button:hover {
+  background: #9e96d5;
+  color: white;
+}
 .card-btn {
   text-decoration: none;
   width: 100px;
@@ -556,7 +560,11 @@ svg {
   flex-direction: row;
   flex-wrap: wrap;
 }
-#details-box {
+#wordcloud-title {
+  /* color: #666; */
+  padding: 3rem;
+}
+.details-box {
   position: absolute;
   z-index: 1;
   padding: 10px;
@@ -567,9 +575,30 @@ svg {
   cursor: pointer;
   top: 0;
 }
-#details-box i {
+.details-box i {
   position: absolute;
   z-index: 999;
+}
+#change-image-box {
+  position: absolute;
+  z-index: 1;
+  /* padding: 10px; */
+  /* width: 100%; */
+  /* height: 0; */
+  display: flex;
+  /* justify-content: flex-end; */
+  cursor: pointer;
+  top: 40rem;
+  right: 10px;
+}
+
+.change-image-button {
+  padding: 2px 10px;
+  background: #6a639d;
+  border: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: 0.2s ease-in-out;
 }
 
 #result-box {
@@ -680,7 +709,7 @@ svg {
 
 .chart {
   opacity: 0;
-  padding: 0 .9rem;
+  padding: 0 0.9rem;
   height: 10rem;
   width: 12rem;
   position: relative;
@@ -691,6 +720,44 @@ svg {
   height: 27rem;
   width: 100%;
   margin-top: 2rem;
+}
+
+#wordcloud img {
+  height: 100%;
+}
+#wordcloud {
+  /* height: 27rem; */
+  width: 100%;
+  /* display: flex; */
+  /* flex-direction: row; */
+}
+
+.wordcloud-image {
+  margin-bottom: 1rem;
+}
+#common-words-box {
+  width: 100%;
+  align-self: center;
+  /* padding-bottom: .2rem; */
+}
+
+#common-words-box h1 {
+  margin: 0;
+  color: initial;
+  font-weight: initial;
+  font-size: 15px;
+  color: #666;
+  padding: 0;
+}
+#common-words p {
+  text-align: left;
+  padding: 0.5rem 2rem;
+  color: #666;
+  display: inline-block;
+  font-size: 13px;
+}
+#common-words span {
+  font-weight: 400;
 }
 .search-container form input,
 .search-container .form-group input {

@@ -21,7 +21,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-class textTest(APIView):
+class text(APIView):
     # serializer_class = TextSerializer# To get HTML Form in Browsable API
 
     def post(self, request):
@@ -62,8 +62,8 @@ class textTest(APIView):
     # return render(request, './sentiment_type.html', context)
 
     # Page with HTML
-    # class textTest(APIView):
-    #     # renderer_classes = [textTestTemplateHTMLRender]
+    # class text(APIView):
+    #     # renderer_classes = [textTemplateHTMLRender]
     #     renderer_classes = [TemplateHTMLRenderer]
     #     template_name = './sentiment_type.html'
     #     style={'base_template': 'input.html', 'placeholder': 'Enter any search query, #hashtag or @user_tag', 'hide_label': True}
@@ -121,7 +121,7 @@ class textTest(APIView):
     #                 return JsonResponse(newdict, status=status.HTTP_201_CREATED)    
     #             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class liveTweetTest(APIView):
+class liveTweet(APIView):
     # serializer_class = LiveTweetSerializer
     def post(self, request):
         data = request.data
@@ -133,15 +133,16 @@ class liveTweetTest(APIView):
         serializer = LiveTweetSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            print(serializer.data)
+            # print(serializer.data)
             newdict = serializer.data
             newdict.update({
                 'dataArray': analysisData['dataArray'], 
                 'MA':analysisData['MA'],
                 'MA_polarity':analysisData['MA_polarity'], 
-                'MA_timestamps': analysisData['MA_timestamps']
+                'MA_timestamps': analysisData['MA_timestamps'],
+                'word_frequency': analysisData['word_frequency'],
                 })
-            print(newdict)
+            # print(newdict)
 
             return Response(newdict, status=status.HTTP_201_CREATED)    
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -170,7 +171,7 @@ class liveTweetTest(APIView):
         # return render(request, './sentiment_type.html', context)
 
 
-# def liveTweetTest(request):
+# def liveTweet(request):
 #     form = liveTweetForm(request.POST or None)
 #     if request.method == "POST":
 #         print(request.POST)
@@ -190,7 +191,7 @@ class liveTweetTest(APIView):
 #     }
 #     return render(request, './sentiment_type.html', context)
 
-class uploadTest(generics.GenericAPIView, mixins.CreateModelMixin, mixins.RetrieveModelMixin ):
+class upload(generics.GenericAPIView, mixins.CreateModelMixin, mixins.RetrieveModelMixin ):
     serializer_class = CsvSerializer
     newdict = {}
     # queryset = Csv.objects.latest('uploaded')
@@ -255,7 +256,7 @@ class uploadTest(generics.GenericAPIView, mixins.CreateModelMixin, mixins.Retrie
 
 
 
-# def uploadTest(request):
+# def upload(request):
 #     form = CsvModelForm(request.POST or None, request.FILES or None)
 #     if request.is_ajax():
 #         print('started')

@@ -153,7 +153,7 @@ window.onload = function () {
     }, 3500);
   };
 
-  // Line Chart Generator Function
+  // Line and Pie Chart Generator Function
   const linePieChartHandler = (
     dataArray,
     MA,
@@ -162,13 +162,31 @@ window.onload = function () {
     MA_timestamps
   ) => {
     dataArray = dataArray.map((num) => Math.round(num * 100));
+    // renderContainer.innerHTML += `
+    // <div class="chart">
+    //      <canvas id="pie-chart" aria-label="Sentiment of Tweet Entered" role="img"></canvas>
+    // </div>
+    // <div class="line-chart">
+    //      <canvas id="line-chart" aria-label="${MA_window} Tweet Sentiment Moving Average" role="img"></canvas>
+    // </div>
+    // <p id="wordcloud-title">Word Cloud</p>
+    // <div id="wordcloud">
+    //     <img src="../../static/images/wordcloud.png" alt="wordcloud">
+    // </div>`;
     renderContainer.innerHTML += `
     <div class="chart">
          <canvas id="pie-chart" aria-label="Sentiment of Tweet Entered" role="img"></canvas>
     </div>
     <div class="line-chart">
          <canvas id="line-chart" aria-label="${MA_window} Tweet Sentiment Moving Average" role="img"></canvas>
+    </div>
+    <p id="wordcloud-title">Word Cloud</p>
+    <div id="wordcloud">
+      <div class="wordcloud-image">
+        <img src="../../static/images/wordcloud.png" alt="wordcloud">
+      </div>
     </div>`;
+
     $(".chart").css({
       opacity: "1",
     });
@@ -363,12 +381,13 @@ window.onload = function () {
     }, 3500);
   };
 
+  // Plus Button Controller
   var expand = false;
   $(document).on("click", "#details", function () {
     var chart = Chart.getChart("line-chart");
     if (!expand) {
       $("#render-container").css({
-        height: "39rem",
+        height: "80rem",
         width: "100%",
       });
 
@@ -421,6 +440,7 @@ window.onload = function () {
       }, 2000);
     }
   });
+
   // Moving Pointer on Sentiment Scale
   const pointer = (polarity) => {
     percent = 318 + ((polarity + 1) / 2) * 179;
@@ -459,7 +479,7 @@ window.onload = function () {
         transition: "2s",
       });
       $("#spinner-box").html(
-        `<img src="../../static/./images/Dual Ring-1s-50px.svg" alt="">`
+        `<img src="../../static/images/Dual Ring-1s-50px.svg" alt="">`
       );
     } else {
       $("#spinner-box").css({
@@ -470,6 +490,73 @@ window.onload = function () {
       $("#spinner-box").html(``);
     }
   }
+
+  // Toggle Mask View and Box View for Word Cloud
+  var mask = false;
+  $(document).on("click", "#change-image-button", function () {
+    if (!mask) {
+      $("#change-image-box").html(`
+          <button class="common-btn change-image-button" id="change-image-button">
+            Mask View
+          </button>
+      `);
+      $(".wordcloud-image").html(`
+          <img src="../../static/images/wordcloud_mask.png" alt="wordcloud">
+      `);
+      $(".wordcloud-image").css({
+        width: "100%",
+        height: "40rem",
+      });
+      $("#render-container").css({
+        height: "92.5rem",
+      });
+
+      mask = true;
+    } else {
+      $("#change-image-box").html(`
+      <button class="common-btn change-image-button" id="change-image-button">
+      Box View
+      </button>
+      `);
+      $(".wordcloud-image").html(`
+      <img src="../../static/images/wordcloud.png" alt="wordcloud">
+      `);
+      $(".wordcloud-image").css({
+        width: "100%",
+        height: "fit-content",
+      });
+      $("#render-container").css({
+        height: "78rem",
+      });
+      mask = false;
+    }
+  });
+
+  const mostCommonWords = (word_frequency) => {
+    console.log(word_frequency);
+    console.log(typeof word_frequency);
+    $("#wordcloud").append(`
+    <div id="common-words-box">
+      <h1>Most Common Words</h1>
+      <div id="common-words">
+      </div>
+    </div>
+    `);
+
+    // <h1>Most Common Words</h1>
+    // <p><span>1.</span> ${word_frequency[0]}</p>
+    // <p><span>2.</span> ${word_frequency[1]}</p>
+    // <p><span>3.</span> ${word_frequency[2]}</p>
+    // <p><span>4.</span> ${word_frequency[3]}</p>
+    // <p><span>5.</span> ${word_frequency[4]}</p>
+    for (var i = 0; i < 5; i++) {
+      $("#common-words").append(
+        `<p><span>${i + 1}.</span> ${word_frequency[i][0]} - ${
+          word_frequency[i][1]
+        }</p>`
+      );
+    }
+  };
 
   // What to do when Text form is submitted
   textForm.addEventListener("submit", (e) => {
@@ -502,6 +589,7 @@ window.onload = function () {
   });
 
   liveForm.addEventListener("submit", (e) => {
+    expand = false;
     spinnerToggle();
     e.preventDefault();
     // For Form
@@ -518,8 +606,16 @@ window.onload = function () {
         console.log(response);
         spinnerToggle();
         resultHandler(response.sentiment);
+        // renderContainer.innerHTML += `
+        // <div class="details-box"><i id="details" class="fas fa-plus"></i></div>
+        // `;
         renderContainer.innerHTML += `
-        <div id="details-box"><i id="details" class="fas fa-plus"></i></div>
+        <div class="details-box"><i id="details" class="fas fa-plus"></i></div>
+        <div id="change-image-box">
+          <button class="common-btn change-image-button" id="change-image-button">
+            Mask View
+          </button>
+        </div>
         `;
         linePieChartHandler(
           response.dataArray,
@@ -529,8 +625,9 @@ window.onload = function () {
           response.MA_timestamps
         );
         pointer(response.polarity);
+        mostCommonWords(response.word_frequency);
       },
-      error: function () {
+      error: function (error) {
         console.log(error);
       },
       cache: false,

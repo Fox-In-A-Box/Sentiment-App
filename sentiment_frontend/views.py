@@ -28,8 +28,8 @@ def about(request):
     return render(request, './about.html', {'title': 'About'})
 
 
-# class textTest(APIView):
-#         # renderer_classes = [textTestTemplateHTMLRender]
+# class text(APIView):
+#         # renderer_classes = [textTemplateHTMLRender]
 #         renderer_classes = [TemplateHTMLRenderer]
 #         template_name = './sentiment_type.html'
 #         style={'base_template': 'input.html', 'placeholder': 'Enter any search query, #hashtag or @user_tag', 'hide_label': True}
