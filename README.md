@@ -3,7 +3,7 @@
 
 ## Demo
 
-![](demo.gif)
+![](https://i.imgur.com/7rBHcnb.gifv)
 
 
 ## About
