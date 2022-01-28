@@ -27,6 +27,9 @@ def sentiment_api(request):
 def about(request):
     return render(request, './about.html', {'title': 'About'})
 
+def emotion(request):
+    return render(request, './coming_soon.html', {'title': 'Emotion'})
+
 
 # class text(APIView):
 #         # renderer_classes = [textTemplateHTMLRender]
