@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import math
 import nltk
+import os
 from nltk.tokenize import sent_tokenize
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 analyzer = SentimentIntensityAnalyzer()
@@ -22,10 +23,10 @@ from PIL import Image
 import os.path
 
 # Keys necessary for twitter api to run
-consumer_key = 'hllT6aKS7S6T0Qbw5uRzVdEBF'
-consumer_secret = 'xcp1cz02UyGhZGLRPED1JSrKfTfjQKvoJ7JzTtnila64WUpCQ4'
-access_token = '1259743528986517504-GVCAOVeK1L7PJtPrr7u8DqF7fReyD2'
-access_token_secret = 'jfPtqGTdXBBXkJihJeyIN2hebN0fxTznIi43wXfM11T63'
+consumer_key = os.environ.get('consumer_key')
+consumer_secret =os.environ.get('consumer_secret')
+access_token = os.environ.get('access_token')
+access_token_secret = os.environ.get('access_token_secret')
 
 
 class AnalysisLiveTweet():
