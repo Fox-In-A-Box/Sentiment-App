@@ -4,21 +4,13 @@
 <div class="search-container" id="search-container">
   <div class="search-background"></div>
   <h1>Type Your Tweet</h1>
-  <!-- <div class="form-container"> -->
   <form id="search-form" action="" method="post">
     {% csrf_token %}
-    <!-- <input
-      type="text"
-      placeholder="Enter any search query, #hashtag or @user_tag"
-      name="live-tweets-form"
-    /> -->
-    <!-- {% render_form serializer %} -->
     {% render_field serializer.text style=style %}
     <button class="common-btn search-button" id="submit-btn" type="submit">
       Submit
     </button>
   </form>
-  <!-- <div id="progress-bar"></div> -->
   <div id="spinner-box"><img src="../../static/./images/Dual Ring-1s-50px.svg" alt=""></div>
   <div id="render-container">
     <!-- result items go here -->
@@ -62,11 +54,6 @@
         <p class="card-subtitle search-text">
           Analyse the sentiment of your search query, hashtag or user tag
         </p>
-        <!-- <button
-          class="card-btn card-btn-front scroll-up-btn"
-          id="live-tweet-btn"
-          onclick="updatePage()"
-        >
           Start
         </button> -->
         <a href="http://127.0.0.1:8000/sentiment_type3/"><button
@@ -104,20 +91,6 @@
   var searchbar = document.getElementById("search-form");
   var heading = document.querySelector(".search-container h1");
   function scrollUp() {
-    // if (event.target.id == "upload-csv-btn") {
-    //   heading.innerText = "Upload Your File";
-    //   searchbar.innerHTML =
-    //     '{% csrf_token %}<input type="text" disabled placeholder="Add your .csv file and upload using the upload button" name="uploaded_file"/> <button class="common-btn search-button" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>';
-    // } else if (event.target.id == "live-tweet-btn") {
-    //   heading.innerText = "Search Anything on Twitter";
-    //   searchbar.innerHTML =
-    //     '{% csrf_token %}<input type="text" placeholder="Enter any search query, #hashtag or @user_tag" name="live_tweet"/> <button class="common-btn search-button" type="submit">Submit</button>';
-    // } else if (event.target.id == "type-tweet-btn") {
-    //   heading.innerText = "Type Your Own Tweet";
-    //   searchbar.innerHTML =
-    //     '{% csrf_token %}<input type="text" placeholder="Type the text of your tweet here" name="typed_tweets"/> <button class="common-btn search-button" type="submit">Submit</button>';
-    // }
-
     document
       .getElementById("search-container")
       .scrollIntoView({ behavior: "smooth", block: "end" });

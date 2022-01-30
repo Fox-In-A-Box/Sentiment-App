@@ -34,7 +34,6 @@
     <button name="upload-form" class="common-btn search-button" id="upload-submit-btn" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>
   </form>
   <div id="spinner-box"><img src="../../static/./images/Dual Ring-1s-50px.svg" alt=""></div>
-  <!-- <div id="details-box"><i id="details" class="fas fa-plus"></i></div> -->
   <div id="render-container">
     
     <!-- result items go here -->
@@ -117,22 +116,18 @@
     // change which form is visible
     if (event.target.id == "upload-csv-btn") {
       heading.innerText = "Upload Your File";
-      // searchbar.innerHTML =
-      //   '{% csrf_token %} {{uploadForm}} <input type="hidden" name="form_type" value="upload_file"><button class="common-btn search-button" type="submit"><i class="fas fa-arrow-circle-up"></i> Upload</button>';
       $("#upload-form").css({display:"flex"})
       $("#live-form").css({display:"none"})
       $("#text-form").css({display:"none"})
+      
     } else if (event.target.id == "live-tweet-btn") {
       heading.innerText = "Search Anything on Twitter";
-      // searchbar.innerHTML =
-      //   '{% csrf_token %}{{liveForm}}  <input type="hidden" name="form_type" value="live_tweet"><button class="common-btn search-button" type="submit">Submit</button>';
       $("#upload-form").css({display:"none"})
       $("#live-form").css({display:"flex"})
       $("#text-form").css({display:"none"})
+
     } else if (event.target.id == "type-tweet-btn") {
       heading.innerText = "Type Your Own Tweet";
-      // searchbar.innerHTML =
-      //   '{% csrf_token %}{{typeForm}} <input type="hidden" name="form_type" value="text"><button class="common-btn search-button" type="submit">Submit</button>';
       $("#upload-form").css({display:"none"})
       $("#live-form").css({display:"none"})
       $("#text-form").css({display:"flex"})

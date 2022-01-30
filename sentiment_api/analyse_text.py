@@ -24,7 +24,7 @@ class AnalysisText():
                      analyzer.polarity_scores(newText)['neu'], 
                      analyzer.polarity_scores(newText)['neg']]
         
-        # Determin sentiment based on polarity number
+        # Determine sentiment based on polarity number
         if polarity<-0.05:
             res = "Negative"
         elif polarity>0.05:

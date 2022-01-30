@@ -175,9 +175,7 @@ class AnalysisLiveTweet():
         dataArray = [df2['Positive'].iloc[0], df2['Neutral'].iloc[0],df2['Negative'].iloc[0]]
         MA = visualMA['MA Polarity'].tolist()
         MA_timestamps = visualMA['Timestamp'].tolist()
-        # print(MA)
         MA_original_polarity = visualMA['Polarity'].tolist()
-        # print(MA_original_polarity)
 
         return { 
             'sentiment': res, 

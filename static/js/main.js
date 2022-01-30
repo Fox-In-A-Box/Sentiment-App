@@ -24,9 +24,6 @@ window.onload = function () {
   const alertBox = document.getElementById("alert-box");
   const progressBar = document.getElementById("progress-bar");
 
-  // Moving Average Values for Line Chart
-  // MA = MA_window = MA_polarity = "";
-
   // Display Results and Pie Chart Graph in render-conatiner div
   const resultHandler = (sentiment) => {
     if (sentiment == "Negative") {
@@ -105,14 +102,6 @@ window.onload = function () {
           delay: 2000,
         },
         plugins: {
-          // title: {
-          //   display: true,
-          //   position: "bottom",
-          //   text: "Sentiment of Each Word",
-          //   font: {
-          //     family: "'Poppins', sans-serif",
-          //   },
-          // },
           tooltip: {
             callbacks: {
               label: function (context) {
@@ -131,16 +120,6 @@ window.onload = function () {
               },
             },
           },
-          // Uncomment for datalabels
-          // datalabels: {
-          //   formatter: (value) => {
-          //     if (value > 0) {
-          //       return value + "%";
-          //     } else {
-          //       return "";
-          //     }
-          //   },
-          // },
         },
       },
     });
@@ -149,7 +128,7 @@ window.onload = function () {
     setTimeout(function (chart = pieChart) {
       chart.options.animation.delay = 0;
       chart.update();
-      console.log("pie update triggered");
+      // console.log("pie update triggered");
     }, 3500);
   };
 
@@ -162,17 +141,6 @@ window.onload = function () {
     MA_timestamps
   ) => {
     dataArray = dataArray.map((num) => Math.round(num * 100));
-    // renderContainer.innerHTML += `
-    // <div class="chart">
-    //      <canvas id="pie-chart" aria-label="Sentiment of Tweet Entered" role="img"></canvas>
-    // </div>
-    // <div class="line-chart">
-    //      <canvas id="line-chart" aria-label="${MA_window} Tweet Sentiment Moving Average" role="img"></canvas>
-    // </div>
-    // <p id="wordcloud-title">Word Cloud</p>
-    // <div id="wordcloud">
-    //     <img src="../../static/images/wordcloud.png" alt="wordcloud">
-    // </div>`;
     renderContainer.innerHTML += `
     <div class="chart">
          <canvas id="pie-chart" aria-label="Sentiment of Tweet Entered" role="img"></canvas>
@@ -222,14 +190,6 @@ window.onload = function () {
           delay: 2000,
         },
         plugins: {
-          // title: {
-          //   display: true,
-          //   position: "bottom",
-          //   text: "Sentiment of Each Word",
-          //   font: {
-          //     family: "'Poppins', sans-serif",
-          //   },
-          // },
           tooltip: {
             callbacks: {
               label: function (context) {
@@ -248,16 +208,6 @@ window.onload = function () {
               },
             },
           },
-          // Uncomment for datalabels
-          // datalabels: {
-          //   formatter: (value) => {
-          //     if (value > 0) {
-          //       return value + "%";
-          //     } else {
-          //       return "";
-          //     }
-          //   },
-          // },
         },
       },
     });
@@ -267,43 +217,6 @@ window.onload = function () {
 
     data = MA_polarity;
     data2 = MA;
-
-    // var totalDuration = 10000;
-    // var delayBetweenPoints = totalDuration / data.length;
-    // var previousY = (lctx) =>
-    //   lctx.index === 0
-    //     ? lctx.chart.scales.y.getPixelForValue(100)
-    //     : lctx.chart
-    //         .getDatasetMeta(lctx.datasetIndex)
-    //         .data[lctx.index - 1].getProps(["y"], true).y;
-    // var animation = {
-    //   x: {
-    //     type: "number",
-    //     easing: "linear",
-    //     duration: delayBetweenPoints,
-    //     from: NaN, // the point is initially skipped
-    //     delay(lctx) {
-    //       if (lctx.type !== "data" || lctx.xStarted) {
-    //         return 0;
-    //       }
-    //       lctx.xStarted = true;
-    //       return lctx.index * delayBetweenPoints;
-    //     },
-    //   },
-    //   y: {
-    //     type: "number",
-    //     easing: "linear",
-    //     duration: delayBetweenPoints,
-    //     from: previousY,
-    //     delay(lctx) {
-    //       if (lctx.type !== "data" || lctx.yStarted) {
-    //         return 0;
-    //       }
-    //       lctx.yStarted = true;
-    //       return lctx.index * delayBetweenPoints;
-    //     },
-    //   },
-    // };
 
     // Chart
     lineChart = new Chart(lctx, {
@@ -363,9 +276,6 @@ window.onload = function () {
         scales: {
           x: {
             ticks: {
-              // font: {
-              //   size: 5,
-              // },
               callback: () => "",
             },
           },
@@ -391,23 +301,9 @@ window.onload = function () {
         width: "100%",
       });
 
-      // document.getElementById("render-container").animate(
-      //   [
-      //     // keyframes
-      //     { height: "11.5rem", width: "24.5rem", offset: 0 },
-      //     { height: "11.5rem", width: "100%", offset: 0.5 },
-      //     { height: "39rem", width: "100%", offset: 1 },
-      //   ],
-      //   {
-      //     // timing options
-      //     duration: 2000,
-      //     easing: "ease-in-out",
-      //     fill: "both",
-      //   }
-      // );
       chart.options.transitions = false;
       expand = true;
-      console.log("expanded");
+      // console.log("expanded");
       setTimeout(function () {
         var chart = Chart.getChart("line-chart");
         chart.options.transitions = true;
@@ -417,23 +313,10 @@ window.onload = function () {
         height: "11.5rem",
         width: "24.5rem",
       });
-      // document.getElementById("render-container").animate(
-      //   [
-      //     // keyframes
-      //     { height: "39rem", width: "100%", offset: 0 },
-      //     { height: "11.5rem", width: "100%", offset: 0.5 },
-      //     { height: "11.5rem", width: "24.5rem", offset: 1 },
-      //   ],
-      //   {
-      //     // timing options
-      //     duration: 2000,
-      //     easing: "ease-in-out",
-      //     fill: "both",
-      //   }
-      // );
+
       chart.options.transitions = false;
       expand = false;
-      console.log("shrink");
+      // console.log("shrink");
       setTimeout(function () {
         var chart = Chart.getChart("line-chart");
         chart.options.transitions = true;
@@ -447,7 +330,7 @@ window.onload = function () {
     if (percent >= 318) {
       percent -= 360;
     }
-    console.log(percent);
+    // console.log(percent);
 
     document.getElementById("outer-pointer").animate(
       [
@@ -533,8 +416,8 @@ window.onload = function () {
   });
 
   const mostCommonWords = (word_frequency) => {
-    console.log(word_frequency);
-    console.log(typeof word_frequency);
+    // console.log(word_frequency);
+    // console.log(typeof word_frequency);
     $("#wordcloud").append(`
     <div id="common-words-box">
       <h1>Most Common Words</h1>
@@ -543,12 +426,6 @@ window.onload = function () {
     </div>
     `);
 
-    // <h1>Most Common Words</h1>
-    // <p><span>1.</span> ${word_frequency[0]}</p>
-    // <p><span>2.</span> ${word_frequency[1]}</p>
-    // <p><span>3.</span> ${word_frequency[2]}</p>
-    // <p><span>4.</span> ${word_frequency[3]}</p>
-    // <p><span>5.</span> ${word_frequency[4]}</p>
     for (var i = 0; i < 5; i++) {
       $("#common-words").append(
         `<p><span>${i + 1}.</span> ${word_frequency[i][0]} - ${
@@ -574,14 +451,14 @@ window.onload = function () {
       data: JSON.stringify({ text: text.value }), // Send JSON POST Request data to Type API
       success: function (response) {
         // Get JSON Response data from Type API as "response"
-        console.log(response);
+        // console.log(response);
         spinnerToggle();
         resultHandler(response.sentiment);
         pieChartHandler(response.dataArray);
         pointer(response.polarity);
       },
       error: function (error) {
-        console.log(error);
+        // console.log(error);
       },
       cache: false,
     });
@@ -602,12 +479,9 @@ window.onload = function () {
       dataType: "json",
       data: JSON.stringify({ live_tweet: liveTweet.value }),
       success: function (response) {
-        console.log(response);
+        // console.log(response);
         spinnerToggle();
         resultHandler(response.sentiment);
-        // renderContainer.innerHTML += `
-        // <div class="details-box"><i id="details" class="fas fa-plus"></i></div>
-        // `;
         renderContainer.innerHTML += `
         <div class="details-box"><i id="details" class="fas fa-plus"></i></div>
         <div id="change-image-box">
@@ -627,7 +501,7 @@ window.onload = function () {
         mostCommonWords(response.word_frequency);
       },
       error: function (error) {
-        console.log(error);
+        // console.log(error);
       },
       cache: false,
     });
@@ -637,38 +511,24 @@ window.onload = function () {
     spinnerToggle();
     e.preventDefault();
     const file_data = fileInput.files[0];
-    console.log(file_data);
+    // console.log(file_data);
 
     const data = new FormData(this);
-    // formdata.append("csrfmiddlewaretoken", csrf[0].value);
-    // formdata.append("file_name", fileInput.files[0]);
 
     $.ajax({
       type: "POST",
       url: "../api/csv/",
       enctype: "multipart/formdata",
       data: data,
-      // beforeSend: function () {},
-      // For Loading File Progress Bar
-      xhr: function () {
-        const xhr = new window.XMLHttpRequest();
-        xhr.upload.addEventListener("progress", (e) => {
-          if (e.lengthComputable) {
-            const loadpercent = (e.loaded / e.total) * 100;
-            console.log(loadpercent);
-          }
-        });
-        return xhr;
-      },
       success: function (response) {
-        console.log("success!");
+        // console.log("success!");
         spinnerToggle();
         resultHandler(response.sentiment);
         pieChartHandler(response.dataArray);
         pointer(response.polarity);
       },
       error: function (error) {
-        console.log(error);
+        // console.log(error);
         spinnerToggle();
         resultHandler("Error");
       },
@@ -677,74 +537,4 @@ window.onload = function () {
       processData: false,
     });
   });
-
-  // Upload Form Test Type3
-
-  // form.addEventListener("submit", function (e) {
-  //   $("#spinner-box").css({
-  //     height: "fit-content",
-  //     opacity: "1",
-  //     transition: "2s",
-  //   });
-  //   $("#spinner-box").html(
-  //     `<img src="../../static/./images/Dual Ring-1s-50px.svg" alt="">`
-  //   );
-  //   console.log("spinner on");
-
-  //   e.preventDefault();
-
-  //   const file_data = fileInput.files[0];
-  //   console.log(file_data);
-
-  //   const formdata = new FormData();
-  //   formdata.append("csrfmiddlewaretoken", csrf[0].value);
-  //   formdata.append("file_name", fileInput.files[0]);
-
-  //   $.ajax({
-  //     type: "POST",
-  //     url: form.action,
-  //     enctype: "multipart/formdata",
-  //     data: formdata,
-  //     beforeSend: function () {},
-  //     xhr: function () {
-  //       const xhr = new window.XMLHttpRequest();
-  //       xhr.upload.addEventListener("progress", (e) => {
-  //         if (e.lengthComputable) {
-  //           const loadpercent = (e.loaded / e.total) * 100;
-  //           console.log(loadpercent);
-  //         }
-  //       });
-  //       return xhr;
-  //     },
-  //     success: function (response) {
-  //       console.log(response);
-  //       spinnerToggle();
-  //       console.log("spinner off");
-  //       resultHandler(response.sentiment);
-  //       pieChartHandler(response.dataArray);
-  //       pointer(response.polarity);
-  //       // spinnerToggle();
-  //       // console.log("spinner off");
-  //     },
-  //     error: function () {
-  //       console.log(error);
-  //     },
-  //     cache: false,
-  //     contentType: false,
-  //     processData: false,
-  //   });
-  // });
-  //   fetch("")
-  //     .then(function (response) {
-  //       return response.json();
-  //     })
-  //     .then(function (response) {
-  //       console.log(response);
-  //       resultHandler(response.sentiment);
-  //       pieChartHandler(response.dataArray);
-  //       pointer(response.polarity);
-  //     });
-  // });
-
-  // console.log(form);
 };

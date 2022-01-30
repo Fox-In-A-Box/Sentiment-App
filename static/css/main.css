@@ -33,30 +33,17 @@ header {
   height: auto;
   width: 100%;
   overflow: hidden;
-  /* position: relative; */
-  /* background-image: url(../images/social-media-phone.png);
-  background-position: 90% bottom;
-  background-size: 700px;
-  background-repeat: no-repeat; */
   align-items: center;
 }
-.container {
-  /* max-width: 1000px; */
 
+.container {
   background: #7839f9;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   animation: header-colour 1s;
 }
-/*.header-colour {
-  z-index: 998;
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 127px;
-  background: #7839f9;
-} */
+
 nav {
   z-index: 999;
   display: flex;
@@ -69,7 +56,6 @@ nav {
 
 .nav-links li {
   display: inline-block;
-  /* margin: 0 15px; */
 }
 .nav-links li a {
   text-decoration: none;
@@ -125,35 +111,12 @@ svg {
   animation: header-colour 1s;
 }
 
-/* White flash in */
-
-/* @keyframes main-banner-svg {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes header-colour {
-  from {
-    background: white;
-  }
-  to {
-    background: #7839f9;
-  }
-} */
-
 .header-container {
-  /* padding: 2rem; */
   font-family: "Roboto", sans-serif;
   position: relative;
   max-width: 1170px;
-  /* width: 100%; */
-  /* transform: translateY(30%); */
   margin: 0 auto;
   margin-top: 180px;
-  /* top: 30%; */
   display: flex;
   flex-wrap: wrap;
 }
@@ -162,7 +125,6 @@ svg {
 .header-container #header-img {
   color: #000000;
   flex-basis: 50%;
-  /* padding-left: 2rem; */
 }
 
 .header-container #header-text h1 {
@@ -172,25 +134,20 @@ svg {
   margin-bottom: 5px;
   margin-top: 5px;
   animation: header-text-h1 ease backwards 2s 0.3s;
-  /* animation: header-text-h1 cubic-bezier(0.25, 0.34, 0.02, 1) backwards 2.5s 0.5s;     */
 }
 .header-container #header-text .header-p {
-  /* color: #000000; */
   width: 80%;
   margin-bottom: 40px;
   font-size: 18px;
   animation: header-text-p ease backwards 2s 0.3s;
-  /* animation: header-text-p cubic-bezier(0.25, 0.34, 0.02, 1) backwards 2.5s 1s; */
 }
 
 .header-container #header-text .common-btn {
   animation: header-text-p ease backwards 2s 0.3s;
-  /* animation: header-text-p cubic-bezier(0.25, 0.34, 0.02, 1) backwards 2.5s 1.6s; */
 }
 
 .header-container #header-img img {
   width: 110%;
-  /* transform: translateY(-5%); */
   animation: header-img ease backwards 2s 0.3s;
 }
 @keyframes header-text-h1 {
@@ -213,29 +170,7 @@ svg {
     margin-left: 0;
   }
 }
-/* @keyframes header-text-h1 {
-  from {
-    position: absolute;
-    width: 800px;
-    opacity: 0;
-    margin-top: -30px;
-  }
-  to {
-    opacity: 1;
-    margin-top: 5px;
-  }
-}
-@keyframes header-text-p {
-  from {
-    position: absolute;
-    opacity: 0;
-    margin-top: -40px;
-  }
-  to {
-    opacity: 1;
-    margin-top: 0px;
-  }
-} */
+
 @keyframes header-img {
   from {
     opacity: 0;
@@ -442,19 +377,6 @@ svg {
   transform: translateZ(50px);
   margin-bottom: 11px;
 }
-/* .card-title::after {
-  content: "";
-  background: black;
-  width: 20%;
-  height: 3px;
-  display: block;
-  position: relative;
-  bottom: -0.5em;
-  margin: auto;
-}
-.card-subtitle {
-  margin-top: 20px;
-} */
 .flip-icons {
   margin-bottom: 20px;
 }
@@ -492,10 +414,7 @@ svg {
 .search-container h1 {
   font-size: 55px;
   color: white;
-  /* color: black; */
-  /* font-weight: 600; */
   margin: 70px auto 50px auto;
-  /* margin: 50px auto; */
 }
 .search-container form,
 .form-group {
@@ -516,25 +435,13 @@ svg {
 #text-form {
   display: flex;
 }
-
-/* #live-form,
-#upload-form,
-#text-form {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 0 20px;
-  font-size: 18px;
-} */
 #spinner-box {
   position: absolute;
   height: fit-content;
   width: fit-content;
   opacity: 0;
-  /* background: white; */
   border-radius: 8px;
   display: flex;
-  /* box-shadow: 0 0 35px 0 rgb(0 0 0 / 10%); */
   justify-content: center;
   top: 1.2%;
   transform: translateY(17.4rem);
@@ -561,7 +468,6 @@ svg {
   flex-wrap: wrap;
 }
 #wordcloud-title {
-  /* color: #666; */
   padding: 3rem;
 }
 .details-box {
@@ -582,11 +488,7 @@ svg {
 #change-image-box {
   position: absolute;
   z-index: 1;
-  /* padding: 10px; */
-  /* width: 100%; */
-  /* height: 0; */
   display: flex;
-  /* justify-content: flex-end; */
   cursor: pointer;
   top: 40rem;
   right: 10px;
@@ -629,15 +531,12 @@ svg {
   margin: auto;
   display: flex;
   align-content: center;
-  /* margin-top: 14px; */
 }
 #outer-pointer {
   z-index: 3;
   position: absolute;
   width: 128px;
   height: 128px;
-  /* background: bisque; */
-  /* margin-top: 14px; */
   transform: rotate(-42deg);
   opacity: 0;
   border-spacing: -42px;
@@ -658,17 +557,14 @@ svg {
 #circle1 {
   stroke: #b3e59f;
   stroke-dasharray: 339;
-  /* stroke-dashoffset: 170; */
 }
 #circle2 {
   stroke: #ffe07d;
   stroke-dasharray: 339;
-  /* stroke-dashoffset: 170; */
 }
 #circle3 {
   stroke: #da387d;
   stroke-dasharray: 339;
-  /* stroke-dashoffset: 170; */
 }
 
 #circle1.load {
@@ -703,7 +599,6 @@ svg {
   }
   100% {
     stroke-dashoffset: 113.33;
-    /* stroke-dashoffset: calc(170 - ((170) * 0.33)); */
   }
 }
 
@@ -726,10 +621,7 @@ svg {
   height: 100%;
 }
 #wordcloud {
-  /* height: 27rem; */
   width: 100%;
-  /* display: flex; */
-  /* flex-direction: row; */
 }
 
 .wordcloud-image {
@@ -738,7 +630,6 @@ svg {
 #common-words-box {
   width: 100%;
   align-self: center;
-  /* padding-bottom: .2rem; */
 }
 
 #common-words-box h1 {
@@ -821,7 +712,6 @@ svg {
 .card:hover .search-icons {
   transform: translateY(-1rem);
 }
-/* End of Search section */
 .comingsoon-container {
   position: relative;
   height: 80vh;
@@ -842,19 +732,12 @@ svg {
 .about-container {
   position: relative;
   height: 80vh;
-  /* max-width: 1170px; */
-  /* width: 100%; */
-  /* transform: translateY(30%); */
-  /* margin: 0 auto; */
   margin-top: 20vh;
-  /* top: 30%; */
   display: flex;
   flex-wrap: wrap;
   padding: 2rem;
   padding-bottom: 0;
   border-radius: 20px;
-  /* box-shadow: 0 0 35px 0 rgb(0 0 0 / 10%); */
-  /* box-shadow: 0 5px 50px 0 rgb(0 0 0 / 10%); */
 }
 .about-img,
 .about-text {
@@ -879,7 +762,6 @@ svg {
 }
 @keyframes about-text-h1-animated {
   from {
-    /* position: absolute; */
     opacity: 0;
     margin-top: -10%;
   }
@@ -995,10 +877,7 @@ svg {
   #text-submit-btn,
   #live-submit-btn,
   #upload-submit-btn {
-    /* transform: translateX(-76px); */
     padding: 5px 10px;
-    /* width: 50%; */
-    /* text-align: center; */
   }
   .search-container form input {
     padding: 0;

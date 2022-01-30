@@ -5,6 +5,7 @@
 
 ![](demo.gif)
 
+Try it out here at this [link](https://twtsentapp.herokuapp.com/)!
 
 ## About
 
@@ -22,15 +23,4 @@ Live tweets are obtained from the Twitter API for use in finding the sentiment o
 - Pie charts showing the distribution of the different sentiments throughout the input text as a percentage
 - Wordcloud generation from list of 200 most common words for live tweets
 - Written list of the top 5 most common words for live tweets
-- Line charts of 10 tweet moving average of the most recent 100 tweets obtained from Twitter's feed
-
-
-## Requirements
-
-- Python 3.8.11+
-- NLTK
-- Pandas
-- Django
-- NumPy
-- TweePy
-- Python-DateUtils
+- Line charts of 10 tweet moving average of the 100 most recent tweets obtained from Twitter's feed

@@ -3,12 +3,6 @@ from django.views.generic import ListView, CreateView, View, TemplateView
 import rest_framework
 from rest_framework import serializers
 
-# from sentiment_api.serializers import TextSerializer
-# from .models import LiveTweet, Text, Csv, CsvTweets
-# from .analyse_text import AnalysisText
-# from .analyse_csv import AnalysisCsv
-# from .analyse_live_tweet import AnalysisLiveTweet
-# from .forms import liveTweetForm, CsvModelForm, TextForm
 from sentiment_api.serializers import TextSerializer,LiveTweetSerializer,CsvSerializer,CsvTweetsSerializer 
 from django.http import JsonResponse
 import csv, pandas as pd
@@ -29,22 +23,6 @@ def about(request):
 
 def emotion(request):
     return render(request, './coming_soon.html', {'title': 'Emotion'})
-
-
-# class text(APIView):
-#         # renderer_classes = [textTemplateHTMLRender]
-#         renderer_classes = [TemplateHTMLRenderer]
-#         template_name = './sentiment_type.html'
-#         style={'base_template': 'input.html', 'placeholder': 'Enter any search query, #hashtag or @user_tag', 'hide_label': True}
-
-#     #     # def get(self, request):
-#     #     #     tweets = Text.objects.all()
-#     #     #     serializer = TextSerializer(tweets, many=True)
-#     #     #     return Response(serializer.data)
-
-#         def get(self, request, *args, **kwargs):
-#             serializer = TextSerializer()
-#             return Response({'serializer': serializer, 'style': self.style})
 
 
 class SentimentAnalysisPage(APIView):

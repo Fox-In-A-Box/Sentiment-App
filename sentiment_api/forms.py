@@ -11,14 +11,6 @@ class liveTweetForm(forms.ModelForm):
         widgets = {
             'live_tweet': forms.TextInput(attrs={'placeholder': 'Enter any search query, #hashtag or @user_tag'})
         }
-# class liveTweetForm(forms.Form):
-# live_tweet = forms.CharField(max_length=280, label="",widget=forms.TextInput(attrs={'placeholder': 'Enter any search query, #hashtag or @user_tag'}))
-
-# class uploadFileForm(forms.Form):
-#     uploaded_file = forms.FileField(max_length=100, label="")
-# class typedTweetForm(forms.Form):
-
-#     typed_tweet = forms.CharField(max_length=280, label="",widget=forms.TextInput(attrs={'placeholder': 'Type the text of your tweet here'}))
 
 class TextForm(forms.ModelForm):
     class Meta:
@@ -38,11 +30,4 @@ class CsvModelForm(forms.ModelForm):
         labels = {
             'file_name': '',
         }
-# class CsvForm(forms.ModelForm):
-#     class Meta:
-#         model = Csv
-#         fields = ['tweets']
-#         labels = {
-#             'tweets': '',
-#         }
     
