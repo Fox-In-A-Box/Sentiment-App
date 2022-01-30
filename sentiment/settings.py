@@ -126,7 +126,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 MEDIA_URL = '/csvs/'
 MEDIA_ROOT = BASE_DIR / 'csvs'
 # Default primary key field type
