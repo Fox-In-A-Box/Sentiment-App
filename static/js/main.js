@@ -566,7 +566,7 @@ window.onload = function () {
     // For Form
     $.ajax({
       type: "POST",
-      url: "http://127.0.0.1:8000/api/type/",
+      url: "../api/type/",
       header: {
         "X-CSRFToken": csrf,
       },
@@ -595,7 +595,7 @@ window.onload = function () {
     // For Form
     $.ajax({
       type: "POST",
-      url: "http://127.0.0.1:8000/api/live/",
+      url: "../api/live/",
       header: {
         "X-CSRFToken": csrf,
       },
@@ -647,7 +647,7 @@ window.onload = function () {
 
     $.ajax({
       type: "POST",
-      url: "http://127.0.0.1:8000/api/csv/",
+      url: "../api/csv/",
       enctype: "multipart/formdata",
       data: data,
       // beforeSend: function () {},
