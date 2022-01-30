@@ -667,7 +667,7 @@ window.onload = function () {
         pieChartHandler(response.dataArray);
         pointer(response.polarity);
       },
-      error: function () {
+      error: function (error) {
         console.log(error);
         spinnerToggle();
         resultHandler("Error");
