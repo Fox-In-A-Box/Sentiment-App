@@ -28,6 +28,9 @@ DEBUG = os.environ.get('DEBUG_VALUE')
 
 ALLOWED_HOSTS = ['twtsentapp.herokuapp.com']
 
+REST_FRAMEWORK = {
+'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+}
 
 # Application definition
 

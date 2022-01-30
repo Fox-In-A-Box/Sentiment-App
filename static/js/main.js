@@ -4,7 +4,7 @@ window.onload = function () {
   // const form = document.getElementById("search-form"); //old form method
 
   // Csrf token from form
-  const csrf = document.getElementsByName("csrfmiddlewaretoken").value;
+  const csrf = document.querySelector("[name=csrfmiddlewaretoken]").value;
   // const progressBar = document.getElementsByClassName("progress-bar");
 
   // Buttons
@@ -562,7 +562,7 @@ window.onload = function () {
   textForm.addEventListener("submit", (e) => {
     spinnerToggle();
     e.preventDefault();
-
+    console.log(csrf);
     // For Form
     $.ajax({
       type: "POST",
@@ -592,6 +592,7 @@ window.onload = function () {
     expand = false;
     spinnerToggle();
     e.preventDefault();
+    console.log(csrf);
     // For Form
     $.ajax({
       type: "POST",
@@ -637,7 +638,7 @@ window.onload = function () {
   uploadedForm.addEventListener("submit", function (e) {
     spinnerToggle();
     e.preventDefault();
-
+    console.log(csrf);
     const file_data = fileInput.files[0];
     console.log(file_data);
 
