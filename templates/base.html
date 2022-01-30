@@ -12,7 +12,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static '../static/css/main.css' %}"
+      href="{% static 'css/main.css' %}"
     />
     <!-- Font Awesome -->
     <link
@@ -43,7 +43,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js"></script>     
     <!-- Custom js / Main.js -->
-    <script src={% static './js/main.js' %}></script>
+    <script src={% static 'js/main.js' %}></script>
 
     {% if title %}
     <title>Twitter Sentiment - {{ title}}</title>
