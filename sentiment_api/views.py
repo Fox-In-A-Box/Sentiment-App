@@ -208,7 +208,7 @@ class upload(generics.GenericAPIView, mixins.CreateModelMixin, mixins.RetrieveMo
     def perform_create(self, serializer):
         instance = serializer.save()
         # serializer.save()
-        with open(instance.file_name.path, 'r') as f:
+        with open(instance.file_name.path, 'r', encoding='cp1252') as f:
             reader = csv.reader(f)
 
             for i, row in enumerate(reader):
