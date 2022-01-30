@@ -28,10 +28,6 @@ DEBUG = os.environ.get('DEBUG_VALUE')
 
 ALLOWED_HOSTS = ['twtsentapp.herokuapp.com']
 
-REST_FRAMEWORK = {
-'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
-}
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -141,8 +137,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS=["https://twtsentapp.herokuapp.com/"]
 
