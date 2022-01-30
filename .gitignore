@@ -1,6 +1,7 @@
 node_modules
 csvs/
 test\ csvs/
+demo.gif
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
