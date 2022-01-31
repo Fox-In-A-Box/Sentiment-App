@@ -24,6 +24,8 @@ window.onload = function () {
   const alertBox = document.getElementById("alert-box");
   const progressBar = document.getElementById("progress-bar");
 
+  var wordcloud_b64 = "";
+  var wordcloud_mask_b64 = "";
   // Display Results and Pie Chart Graph in render-conatiner div
   const resultHandler = (sentiment) => {
     if (sentiment == "Negative") {
@@ -151,7 +153,7 @@ window.onload = function () {
     <p id="wordcloud-title">Word Cloud</p>
     <div id="wordcloud">
       <div class="wordcloud-image">
-        <img src="../../static/images/wordcloud.png" alt="wordcloud">
+        <img src="data:image/png;base64,${wordcloud_b64}" alt="wordcloud">
       </div>
     </div>`;
 
@@ -384,7 +386,7 @@ window.onload = function () {
           </button>
       `);
       $(".wordcloud-image").html(`
-          <img src="../../static/images/wordcloud_mask.png" alt="wordcloud">
+          <img src="data:image/png;base64,${wordcloud_mask_b64}" alt="wordcloud">
       `);
       $(".wordcloud-image").css({
         width: "100%",
@@ -402,7 +404,7 @@ window.onload = function () {
       </button>
       `);
       $(".wordcloud-image").html(`
-      <img src="../../static/images/wordcloud.png" alt="wordcloud">
+      <img src="data:image/png;base64,${wordcloud_b64}" alt="wordcloud">
       `);
       $(".wordcloud-image").css({
         width: "100%",
@@ -479,6 +481,9 @@ window.onload = function () {
       dataType: "json",
       data: JSON.stringify({ live_tweet: liveTweet.value }),
       success: function (response) {
+        mask = false;
+        wordcloud_b64 = response.wordcloud_b64;
+        wordcloud_mask_b64 = response.wordcloud_mask_b64;
         // console.log(response);
         spinnerToggle();
         resultHandler(response.sentiment);
@@ -486,7 +491,7 @@ window.onload = function () {
         <div class="details-box"><i id="details" class="fas fa-plus"></i></div>
         <div id="change-image-box">
           <button class="common-btn change-image-button" id="change-image-button">
-            Mask View
+            Box View
           </button>
         </div>
         `;
@@ -497,6 +502,7 @@ window.onload = function () {
           response.MA_polarity,
           response.MA_timestamps
         );
+
         pointer(response.polarity);
         mostCommonWords(response.word_frequency);
       },

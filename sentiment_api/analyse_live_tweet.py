@@ -22,6 +22,8 @@ from collections import defaultdict
 from PIL import Image
 import os.path
 
+import base64
+
 # Keys necessary for twitter api to run
 consumer_key = os.environ.get('consumer_key')
 consumer_secret =os.environ.get('consumer_secret')
@@ -127,6 +129,13 @@ class AnalysisLiveTweet():
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
         mask = np.array(Image.open(os.path.join(script_dir,'../static/images', 'twitter_mask.png')))
+
+        # if os.path.exists(os.path.join(script_dir,'../static/images', 'wordcloud.png')):
+        #     print("removed")
+        #     os.remove(os.path.join(script_dir,'../static/images', 'wordcloud.png'))
+        # if os.path.exists(os.path.join(script_dir,'../static/images', 'wordcloud_mask.png')):
+        #     print("removed")
+        #     os.remove(os.path.join(script_dir,'../static/images', 'wordcloud_mask.png'))
         
         wordcloud = WordCloud(
             width=800,
@@ -135,10 +144,10 @@ class AnalysisLiveTweet():
             max_words=200,
             background_color=None,
         ).generate(' '.join(df['Wordcloud Tweet'].tolist()))
+        wordcloud.to_file(os.path.join(script_dir,"../static/images/wordcloud.png"))
 
-        if os.path.exists(os.path.join(script_dir,'../static/images', 'wordcloud.png')):
-            os.remove(os.path.join(script_dir,'../static/images', 'wordcloud.png'))
-        wordcloud.to_file("static/images/wordcloud.png")
+        with open(os.path.join(script_dir,"../static/images/wordcloud.png"), "rb") as img_file:
+            wordcloud_b64 = base64.b64encode(img_file.read())
 
         wordcloud_mask = WordCloud(
             mask = mask,
@@ -146,7 +155,10 @@ class AnalysisLiveTweet():
             background_color="white",
         ).generate(' '.join(df['Wordcloud Tweet'].tolist()))
 
-        wordcloud_mask.to_file("static/images/wordcloud_mask.png")
+        wordcloud_mask.to_file(os.path.join(script_dir,"../static/images/wordcloud_mask.png"))
+        
+        with open(os.path.join(script_dir,"../static/images/wordcloud_mask.png"), "rb") as img_file:
+            wordcloud_mask_b64 = base64.b64encode(img_file.read())
         
 
 
@@ -186,6 +198,8 @@ class AnalysisLiveTweet():
             'MA_polarity':MA_original_polarity, 
             'MA_timestamps': MA_timestamps,
             'word_frequency': word_frequency_list,
+            'wordcloud_b64': wordcloud_b64,
+            'wordcloud_mask_b64':wordcloud_mask_b64,
             }
 
 

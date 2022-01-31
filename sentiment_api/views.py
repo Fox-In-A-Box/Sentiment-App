@@ -56,6 +56,8 @@ class liveTweet(APIView):
                 'MA_polarity':analysisData['MA_polarity'], 
                 'MA_timestamps': analysisData['MA_timestamps'],
                 'word_frequency': analysisData['word_frequency'],
+                'wordcloud_b64': analysisData['wordcloud_b64'],
+                'wordcloud_mask_b64':analysisData['wordcloud_mask_b64'],
                 })
 
             return Response(newdict, status=status.HTTP_201_CREATED)    
