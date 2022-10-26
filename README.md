@@ -3,7 +3,7 @@
 
 ## Demo
 
-![](demo.gif)
+<img src="/demo.gif?raw=true" width="200px">
 
 Try it out here at this [link](https://twtsentapp.herokuapp.com/)!
 
